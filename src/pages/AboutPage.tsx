@@ -52,11 +52,11 @@ export default function AboutPage() {
       <section className="max-w-5xl mx-auto px-4 py-10">
         <LiquidButton
           variant="ghost"
-          onClick={() => { playSound(); navigate("/") }}
+          onClick={() => { playSound(); navigate(-1) }}
           glowColor="rgba(139,92,246,0.2)"
           className="mb-6 -ml-2 text-gray-400 hover:text-white"
         >
-          <Icon name="ArrowLeft" size={16} /> На главную
+          <Icon name="ArrowLeft" size={16} /> Назад
         </LiquidButton>
 
         <motion.div initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5 }}>

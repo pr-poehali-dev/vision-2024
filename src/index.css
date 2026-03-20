@@ -1,4 +1,5 @@
 @import url("https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap");
 
 @tailwind base;
 @tailwind components;
@@ -44,6 +45,12 @@
     --sidebar-accent-foreground: 0 0% 98%;
     --sidebar-border: 0 0% 15%;
     --sidebar-ring: 263 70% 50%;
+
+    --mc-font: "Press Start 2P", monospace;
+    --glass-bg: rgba(8, 6, 18, 0.72);
+    --glass-border: rgba(255, 255, 255, 0.08);
+    --glass-purple-bg: rgba(139, 92, 246, 0.14);
+    --glass-purple-border: rgba(139, 92, 246, 0.3);
   }
 }
 
@@ -55,56 +62,180 @@
   body {
     @apply bg-background text-foreground;
     font-family: "Inter", sans-serif;
+    background: linear-gradient(135deg, #07050f 0%, #0a0616 50%, #060408 100%);
+    min-height: 100vh;
   }
 }
 
-@layer utilities {
-  .glass {
-    background: rgba(255, 255, 255, 0.04);
-    backdrop-filter: blur(20px) saturate(180%);
-    -webkit-backdrop-filter: blur(20px) saturate(180%);
-    border: 1px solid rgba(255, 255, 255, 0.08);
-    box-shadow:
-      0 8px 32px rgba(0, 0, 0, 0.4),
-      inset 0 1px 0 rgba(255, 255, 255, 0.08);
-  }
+/* ── Minecraft шрифт ── */
+.mc {
+  font-family: var(--mc-font);
+  letter-spacing: 0.05em;
+}
 
-  .glass-card {
-    background: rgba(255, 255, 255, 0.035);
-    backdrop-filter: blur(24px) saturate(200%);
-    -webkit-backdrop-filter: blur(24px) saturate(200%);
-    border: 1px solid rgba(255, 255, 255, 0.07);
-    box-shadow:
-      0 4px 24px rgba(0, 0, 0, 0.5),
-      inset 0 1px 0 rgba(255, 255, 255, 0.06);
-  }
+/* 3D текстовый эффект */
+.mc-3d {
+  font-family: var(--mc-font);
+  letter-spacing: 0.05em;
+  text-shadow:
+    3px 3px 0px rgba(0, 0, 0, 0.8),
+    0 0 20px rgba(139, 92, 246, 0.5),
+    0 0 40px rgba(139, 92, 246, 0.2);
+}
 
-  .glass-btn {
-    background: rgba(139, 92, 246, 0.12);
-    backdrop-filter: blur(12px) saturate(160%);
-    -webkit-backdrop-filter: blur(12px) saturate(160%);
-    border: 1px solid rgba(139, 92, 246, 0.25);
-    box-shadow:
-      0 2px 16px rgba(139, 92, 246, 0.15),
-      inset 0 1px 0 rgba(255, 255, 255, 0.1);
-    transition: all 0.2s ease;
-  }
+.mc-3d-white {
+  font-family: var(--mc-font);
+  letter-spacing: 0.05em;
+  text-shadow:
+    2px 2px 0px rgba(0, 0, 0, 0.9),
+    4px 4px 0px rgba(0, 0, 0, 0.5),
+    0 0 16px rgba(255, 255, 255, 0.15);
+}
 
-  .glass-btn:hover {
-    background: rgba(139, 92, 246, 0.22);
-    border-color: rgba(139, 92, 246, 0.45);
-    box-shadow:
-      0 4px 24px rgba(139, 92, 246, 0.35),
-      inset 0 1px 0 rgba(255, 255, 255, 0.15);
-  }
+.mc-3d-purple {
+  font-family: var(--mc-font);
+  letter-spacing: 0.05em;
+  color: #c084fc;
+  text-shadow:
+    2px 2px 0px rgba(80, 0, 180, 0.9),
+    4px 4px 0px rgba(60, 0, 140, 0.6),
+    0 0 20px rgba(192, 132, 252, 0.4),
+    0 0 40px rgba(139, 92, 246, 0.2);
+}
 
-  .glass-dark {
-    background: rgba(10, 10, 20, 0.6);
-    backdrop-filter: blur(28px) saturate(180%);
-    -webkit-backdrop-filter: blur(28px) saturate(180%);
-    border: 1px solid rgba(255, 255, 255, 0.06);
-    box-shadow:
-      0 8px 40px rgba(0, 0, 0, 0.6),
-      inset 0 1px 0 rgba(255, 255, 255, 0.05);
-  }
+/* ── Liquid Glass эффекты (тёмные) ── */
+.glass {
+  background: var(--glass-bg);
+  backdrop-filter: blur(28px) saturate(200%);
+  -webkit-backdrop-filter: blur(28px) saturate(200%);
+  border: 1px solid var(--glass-border);
+  box-shadow:
+    0 8px 32px rgba(0, 0, 0, 0.6),
+    0 2px 8px rgba(0, 0, 0, 0.4),
+    inset 0 1px 0 rgba(255, 255, 255, 0.07),
+    inset 0 -1px 0 rgba(0, 0, 0, 0.3);
+}
+
+.glass-card {
+  background: rgba(8, 6, 20, 0.65);
+  backdrop-filter: blur(32px) saturate(200%);
+  -webkit-backdrop-filter: blur(32px) saturate(200%);
+  border: 1px solid rgba(255, 255, 255, 0.07);
+  box-shadow:
+    0 4px 24px rgba(0, 0, 0, 0.6),
+    0 1px 4px rgba(0, 0, 0, 0.4),
+    inset 0 1px 0 rgba(255, 255, 255, 0.06),
+    inset 0 -1px 0 rgba(0, 0, 0, 0.2);
+}
+
+/* Тёмное стекло с фиолетовым оттенком */
+.glass-purple {
+  background: rgba(20, 10, 40, 0.7);
+  backdrop-filter: blur(28px) saturate(200%);
+  -webkit-backdrop-filter: blur(28px) saturate(200%);
+  border: 1px solid rgba(139, 92, 246, 0.22);
+  box-shadow:
+    0 8px 40px rgba(0, 0, 0, 0.7),
+    0 0 20px rgba(139, 92, 246, 0.08),
+    inset 0 1px 0 rgba(139, 92, 246, 0.12),
+    inset 0 -1px 0 rgba(0, 0, 0, 0.3);
+}
+
+/* Кнопка в тёмном стекле */
+.glass-btn {
+  background: rgba(8, 6, 18, 0.75);
+  backdrop-filter: blur(16px) saturate(180%);
+  -webkit-backdrop-filter: blur(16px) saturate(180%);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow:
+    0 2px 16px rgba(0, 0, 0, 0.5),
+    inset 0 1px 0 rgba(255, 255, 255, 0.08),
+    inset 0 -1px 0 rgba(0, 0, 0, 0.3);
+  transition: all 0.2s ease;
+}
+
+.glass-btn:hover {
+  background: rgba(20, 15, 40, 0.8);
+  border-color: rgba(139, 92, 246, 0.35);
+  box-shadow:
+    0 4px 24px rgba(0, 0, 0, 0.6),
+    0 0 16px rgba(139, 92, 246, 0.2),
+    inset 0 1px 0 rgba(255, 255, 255, 0.1),
+    inset 0 -1px 0 rgba(0, 0, 0, 0.3);
+}
+
+/* Фиолетовая стеклянная кнопка */
+.glass-btn-purple {
+  background: rgba(80, 30, 160, 0.3);
+  backdrop-filter: blur(16px) saturate(180%);
+  -webkit-backdrop-filter: blur(16px) saturate(180%);
+  border: 1px solid rgba(139, 92, 246, 0.4);
+  box-shadow:
+    0 2px 16px rgba(139, 92, 246, 0.2),
+    0 4px 24px rgba(0, 0, 0, 0.5),
+    inset 0 1px 0 rgba(255, 255, 255, 0.12),
+    inset 0 -1px 0 rgba(80, 0, 180, 0.3);
+  transition: all 0.2s ease;
+  color: #e0c0ff;
+}
+
+.glass-btn-purple:hover {
+  background: rgba(100, 40, 200, 0.4);
+  border-color: rgba(192, 132, 252, 0.55);
+  box-shadow:
+    0 4px 28px rgba(139, 92, 246, 0.4),
+    0 8px 32px rgba(0, 0, 0, 0.6),
+    inset 0 1px 0 rgba(255, 255, 255, 0.18),
+    inset 0 -1px 0 rgba(80, 0, 180, 0.4);
+  color: #f0d8ff;
+}
+
+.glass-dark {
+  background: rgba(5, 4, 12, 0.8);
+  backdrop-filter: blur(32px) saturate(180%);
+  -webkit-backdrop-filter: blur(32px) saturate(180%);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  box-shadow:
+    0 8px 40px rgba(0, 0, 0, 0.7),
+    inset 0 1px 0 rgba(255, 255, 255, 0.05),
+    inset 0 -1px 0 rgba(0, 0, 0, 0.4);
+}
+
+/* Модальное окно */
+.glass-modal {
+  background: rgba(10, 7, 22, 0.85);
+  backdrop-filter: blur(40px) saturate(220%);
+  -webkit-backdrop-filter: blur(40px) saturate(220%);
+  border: 1px solid rgba(139, 92, 246, 0.2);
+  box-shadow:
+    0 24px 80px rgba(0, 0, 0, 0.85),
+    0 0 40px rgba(139, 92, 246, 0.1),
+    inset 0 1px 0 rgba(255, 255, 255, 0.08),
+    inset 0 -1px 0 rgba(0, 0, 0, 0.4);
+}
+
+/* Хедер */
+.glass-header {
+  background: rgba(6, 4, 14, 0.8);
+  backdrop-filter: blur(40px) saturate(200%);
+  -webkit-backdrop-filter: blur(40px) saturate(200%);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.5);
+}
+
+/* Input */
+.glass-input {
+  background: rgba(255, 255, 255, 0.04);
+  backdrop-filter: blur(8px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: #fff;
+  outline: none;
+  transition:
+    border-color 0.2s,
+    box-shadow 0.2s;
+}
+
+.glass-input:focus {
+  border-color: rgba(139, 92, 246, 0.5);
+  box-shadow: 0 0 0 2px rgba(139, 92, 246, 0.15);
 }

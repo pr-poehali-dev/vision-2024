@@ -5,7 +5,7 @@ import { FeaturesSection } from "@/components/FeaturesSection"
 
 export default function Index() {
   return (
-    <main className="min-h-screen" style={{ background: "linear-gradient(135deg, #0a0a14 0%, #0d0a1a 50%, #0a0a0a 100%)" }}>
+    <main className="min-h-screen" style={{ background: "linear-gradient(135deg, #07050f 0%, #0a0616 50%, #060408 100%)" }}>
       <Header />
       <HeroSection />
       <PartnersSection />

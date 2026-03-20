@@ -90,26 +90,49 @@ const emergency = [
   { nick: "—", event: "—" },
 ]
 
-const sights = [
+type Sight = {
+  title: string
+  description: string
+  image: string
+  architect: string
+  builders: string[]
+}
+
+const sights: Sight[] = [
   {
     title: "Москва-Сити",
     description: "Деловой квартал города Хазбиково. Высотные постройки и центр деловой жизни города. Здесь расположены основные организации и торговые площадки.",
     image: "https://cdn.poehali.dev/projects/1ee73772-ef6a-4321-ba4f-0fb745c59f7f/bucket/612a761a-ede8-4601-9488-461ec1e16fa4.jpg",
+    architect: "Xazbik_",
+    builders: ["Xazbik_", "Der1zon", "reclamad"],
   },
   {
     title: "Центральная площадь",
     description: "Главное место сбора жителей. Здесь проходят городские мероприятия, встречи и важные события города Хазбиково на сервере ChichVAKA.",
     image: "https://cdn.poehali.dev/projects/1ee73772-ef6a-4321-ba4f-0fb745c59f7f/bucket/8b98bcf8-6e76-49f1-a491-ef89619030d0.jpg",
+    architect: "Xazbik_",
+    builders: ["Xazbik_", "Der1zon"],
   },
   {
     title: "Суд",
     description: "Здание суда города Хазбиково — место разбирательства городских споров и конфликтов между жителями. Именно здесь мэр Xazbik_ выносит решения по особо важным делам.",
     image: "https://cdn.poehali.dev/projects/1ee73772-ef6a-4321-ba4f-0fb745c59f7f/bucket/b3f1cac8-0659-45c8-800c-43662d64afa0.jpg",
+    architect: "Xazbik_",
+    builders: ["Xazbik_", "Der1zon"],
   },
   {
     title: "Портал",
     description: "Главный портал города соединяет Хазбиково с другими измерениями сервера ChichVAKA. Уникальная постройка, украшенная светящимися камнями и являющаяся символом города.",
     image: "https://cdn.poehali.dev/projects/1ee73772-ef6a-4321-ba4f-0fb745c59f7f/bucket/9684b4bd-5caa-4a70-b4fb-d5b789c606a8.jpg",
+    architect: "Интернет",
+    builders: ["Xazbik_", "Забытый Игрок"],
+  },
+  {
+    title: "Офис Xazbik_",
+    description: "Личный офис мэра города Хазбиково — уютное рабочее пространство, украшенное деревянной мебелью, растениями и лампами. Здесь Xazbik_ принимает важные городские решения и встречает гостей.",
+    image: "https://cdn.poehali.dev/projects/1ee73772-ef6a-4321-ba4f-0fb745c59f7f/bucket/7f76c6c3-d5fd-432e-98f7-201b660c4cc0.jpg",
+    architect: "AstraLch1k",
+    builders: ["Xazbik_", "Der1zon", "reclamad"],
   },
 ]
 
@@ -143,12 +166,85 @@ const rulesText = `📖 ПРАВИЛА ГОРОДА ХАЗБИКОВО:
 
 При проблемах или жалобах писать Хазбику — @Xazbik_`
 
-function ResidentModal({ resident, onClose }: { resident: typeof residentsData[string] | null, onClose: () => void }) {
+/* ─── Модалка достопримечательности ─── */
+function SightModal({ sight, onClose }: { sight: Sight | null; onClose: () => void }) {
+  if (!sight) return null
+  return (
+    <AnimatePresence>
+      <motion.div
+        className="fixed inset-0 z-50 flex items-center justify-center p-4"
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        exit={{ opacity: 0 }}
+        onClick={onClose}
+      >
+        <div className="absolute inset-0" style={{ background: "rgba(0,0,0,0.75)", backdropFilter: "blur(10px)" }} />
+        <motion.div
+          className="relative z-10 w-full max-w-xl rounded-3xl overflow-hidden glass-modal"
+          initial={{ opacity: 0, scale: 0.88, y: 32 }}
+          animate={{ opacity: 1, scale: 1, y: 0 }}
+          exit={{ opacity: 0, scale: 0.88, y: 32 }}
+          transition={{ type: "spring", stiffness: 320, damping: 28 }}
+          onClick={(e) => e.stopPropagation()}
+        >
+          {/* Фото */}
+          <div className="relative h-52 overflow-hidden">
+            <img src={sight.image} alt={sight.title} className="w-full h-full object-cover" />
+            <div className="absolute inset-0" style={{ background: "linear-gradient(to bottom, transparent 40%, rgba(10,7,22,0.92) 100%)" }} />
+            <button
+              onClick={onClose}
+              className="absolute top-3 right-3 rounded-full p-1.5 text-white transition-all glass-btn"
+            >
+              <Icon name="X" size={15} fallback="Circle" />
+            </button>
+            <div className="absolute bottom-3 left-5">
+              <h2 className="text-white font-bold text-xl" style={{ fontFamily: "'Press Start 2P', monospace", fontSize: 14, textShadow: "2px 2px 0 rgba(0,0,0,0.9)" }}>
+                {sight.title}
+              </h2>
+            </div>
+          </div>
+
+          {/* Содержимое */}
+          <div className="p-5 flex flex-col gap-3">
+            <p className="text-gray-300 text-sm leading-relaxed">{sight.description}</p>
+
+            <div className="rounded-2xl p-4 glass-card flex flex-col gap-2">
+              <div className="flex items-center gap-2 mb-1">
+                <Icon name="Hammer" size={14} className="text-violet-400" fallback="Circle" />
+                <span className="text-white text-sm font-semibold">Строительство</span>
+              </div>
+              <div className="flex items-center justify-between text-sm">
+                <span className="text-gray-500">Архитектор</span>
+                <span className="text-blue-300 font-medium">{sight.architect}</span>
+              </div>
+              <div className="flex items-start justify-between text-sm gap-4">
+                <span className="text-gray-500 flex-shrink-0">Строители</span>
+                <span className="text-violet-300 font-medium text-right">{sight.builders.join(", ")}</span>
+              </div>
+            </div>
+          </div>
+        </motion.div>
+      </motion.div>
+    </AnimatePresence>
+  )
+}
+
+/* ─── Модалка жителя ─── */
+function ResidentModal({ resident, onClose }: { resident: typeof residentsData[string] | null; onClose: () => void }) {
+  const [copied, setCopied] = useState(false)
+  const [infoHover, setInfoHover] = useState(false)
   if (!resident) return null
+
   const skinUrl = resident.skinOverride || `https://mc-heads.net/body/${resident.nick}/200`
   const headUrl = `https://mc-heads.net/head/${resident.nick}/80`
   const color = roleColor[resident.role] || "text-gray-300"
   const badge = roleBg[resident.role] || "border-gray-500/25"
+
+  const copyUsername = () => {
+    navigator.clipboard.writeText(resident.username)
+    setCopied(true)
+    setTimeout(() => setCopied(false), 2000)
+  }
 
   return (
     <AnimatePresence>
@@ -159,37 +255,21 @@ function ResidentModal({ resident, onClose }: { resident: typeof residentsData[s
         exit={{ opacity: 0 }}
         onClick={onClose}
       >
-        <div className="absolute inset-0" style={{ background: "rgba(0,0,0,0.7)", backdropFilter: "blur(8px)" }} />
+        <div className="absolute inset-0" style={{ background: "rgba(0,0,0,0.75)", backdropFilter: "blur(10px)" }} />
         <motion.div
-          className="relative z-10 w-full max-w-md rounded-3xl overflow-hidden"
-          style={{
-            background: "rgba(15,12,30,0.75)",
-            backdropFilter: "blur(32px) saturate(200%)",
-            WebkitBackdropFilter: "blur(32px) saturate(200%)",
-            border: "1px solid rgba(139,92,246,0.2)",
-            boxShadow: "0 24px 80px rgba(0,0,0,0.7), inset 0 1px 0 rgba(255,255,255,0.08), 0 0 40px rgba(139,92,246,0.1)",
-          }}
+          className="relative z-10 w-full max-w-md rounded-3xl overflow-hidden glass-modal"
           initial={{ opacity: 0, scale: 0.88, y: 32 }}
           animate={{ opacity: 1, scale: 1, y: 0 }}
           exit={{ opacity: 0, scale: 0.88, y: 32 }}
           transition={{ type: "spring", stiffness: 340, damping: 28 }}
           onClick={(e) => e.stopPropagation()}
         >
-          {/* Шапка с градиентом */}
           <div className="relative px-6 pt-6 pb-4 flex items-start gap-4"
             style={{ background: "linear-gradient(135deg, rgba(139,92,246,0.12) 0%, transparent 60%)" }}>
             <div className="rounded-2xl overflow-hidden flex-shrink-0"
-              style={{
-                background: "rgba(255,255,255,0.04)",
-                border: "1px solid rgba(255,255,255,0.08)",
-                width: 90, height: 120
-              }}>
-              <img
-                src={skinUrl}
-                alt={resident.nick}
-                className="w-full h-full object-contain"
-                onError={(e) => { (e.target as HTMLImageElement).src = headUrl }}
-              />
+              style={{ background: "rgba(255,255,255,0.04)", border: "1px solid rgba(255,255,255,0.08)", width: 90, height: 120 }}>
+              <img src={skinUrl} alt={resident.nick} className="w-full h-full object-contain"
+                onError={(e) => { (e.target as HTMLImageElement).src = headUrl }} />
             </div>
             <div className="flex-1 pt-1">
               <div className="flex items-center gap-2 mb-2">
@@ -202,37 +282,76 @@ function ResidentModal({ resident, onClose }: { resident: typeof residentsData[s
               </div>
               <p className="text-gray-400 text-xs leading-relaxed">{resident.description}</p>
             </div>
-            <button
-              onClick={onClose}
-              className="absolute top-4 right-4 text-gray-500 hover:text-white transition-colors rounded-full p-1"
-              style={{ background: "rgba(255,255,255,0.05)" }}
-            >
+            <button onClick={onClose}
+              className="absolute top-4 right-4 text-gray-500 hover:text-white transition-colors rounded-full p-1 glass-btn">
               <Icon name="X" size={16} fallback="Circle" />
             </button>
           </div>
 
-          {/* Информация */}
           <div className="px-6 pb-6">
+            {/* Информация с тултипом */}
             <div className="rounded-2xl p-4 glass-card">
               <div className="flex items-center gap-2 mb-3">
-                <Icon name="Info" size={14} className="text-violet-400" />
+                <div className="relative"
+                  onMouseEnter={() => setInfoHover(true)}
+                  onMouseLeave={() => setInfoHover(false)}
+                >
+                  <Icon name="Info" size={14} className="text-violet-400 cursor-help" />
+                  <AnimatePresence>
+                    {infoHover && (
+                      <motion.div
+                        className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 px-3 py-1.5 rounded-xl text-xs text-white whitespace-nowrap glass-purple pointer-events-none z-10"
+                        initial={{ opacity: 0, y: 4, scale: 0.9 }}
+                        animate={{ opacity: 1, y: 0, scale: 1 }}
+                        exit={{ opacity: 0, y: 4, scale: 0.9 }}
+                        transition={{ duration: 0.15 }}
+                      >
+                        Информация о игроке
+                      </motion.div>
+                    )}
+                  </AnimatePresence>
+                </div>
                 <span className="text-white text-sm font-semibold">Информация</span>
               </div>
-              <div className="flex flex-col gap-2 text-sm">
-                <div className="flex items-center justify-between">
-                  <span className="text-gray-500">Роль</span>
-                  <span className={color}>{resident.role}</span>
-                </div>
+              <div className="flex items-center justify-between text-sm">
+                <span className="text-gray-500">Роль</span>
+                <span className={color}>{resident.role}</span>
               </div>
             </div>
 
-            {/* Юз */}
-            <div className="mt-3 rounded-2xl p-4 glass-card">
-              <div className="flex items-center justify-between">
-                <span className="text-gray-400 text-sm">Telegram</span>
-                <span className="text-violet-400 font-medium text-sm">{resident.username}</span>
+            {/* Юз с копированием */}
+            <button
+              onClick={copyUsername}
+              className="mt-3 w-full rounded-2xl p-4 glass-card flex items-center justify-between group transition-all hover:border-violet-500/30"
+            >
+              <span className="text-gray-400 text-sm">Telegram</span>
+              <div className="flex items-center gap-2">
+                <AnimatePresence mode="wait">
+                  {copied ? (
+                    <motion.span
+                      key="copied"
+                      className="text-green-400 text-sm font-medium"
+                      initial={{ opacity: 0, scale: 0.8 }}
+                      animate={{ opacity: 1, scale: 1 }}
+                      exit={{ opacity: 0, scale: 0.8 }}
+                    >
+                      скопировано
+                    </motion.span>
+                  ) : (
+                    <motion.span
+                      key="username"
+                      className="text-violet-400 font-medium text-sm"
+                      initial={{ opacity: 0 }}
+                      animate={{ opacity: 1 }}
+                      exit={{ opacity: 0 }}
+                    >
+                      {resident.username}
+                    </motion.span>
+                  )}
+                </AnimatePresence>
+                <Icon name={copied ? "Check" : "Copy"} size={14} className={copied ? "text-green-400" : "text-gray-500 group-hover:text-violet-400"} fallback="Circle" />
               </div>
-            </div>
+            </button>
           </div>
         </motion.div>
       </motion.div>
@@ -246,30 +365,34 @@ export default function CityPage() {
   const playSound = useClickSound()
   const activeTab = params.get("tab") || "residents"
   const [selectedResident, setSelectedResident] = useState<typeof residentsData[string] | null>(null)
+  const [selectedSight, setSelectedSight] = useState<Sight | null>(null)
 
   return (
-    <main className="min-h-screen" style={{ background: "linear-gradient(135deg, #0a0a14 0%, #0d0a1a 50%, #0a0a0a 100%)" }}>
+    <main className="min-h-screen" style={{ background: "linear-gradient(135deg, #07050f 0%, #0a0616 50%, #060408 100%)" }}>
       <Header />
 
       {selectedResident && (
-        <ResidentModal
-          resident={selectedResident}
-          onClose={() => setSelectedResident(null)}
-        />
+        <ResidentModal resident={selectedResident} onClose={() => setSelectedResident(null)} />
+      )}
+      {selectedSight && (
+        <SightModal sight={selectedSight} onClose={() => setSelectedSight(null)} />
       )}
 
       <section className="max-w-5xl mx-auto px-4 py-10">
         <LiquidButton
           variant="ghost"
-          onClick={() => { playSound(); navigate("/") }}
+          onClick={() => { playSound(); navigate(-1) }}
           glowColor="rgba(139,92,246,0.2)"
           className="mb-6 -ml-2 text-gray-400 hover:text-white"
         >
-          <Icon name="ArrowLeft" size={16} /> На главную
+          <Icon name="ArrowLeft" size={16} /> Назад
         </LiquidButton>
 
         <motion.div initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5 }}>
-          <h1 className="text-3xl font-bold text-white mb-2">Город Хазбиково</h1>
+          <h1 className="text-white mb-2"
+            style={{ fontFamily: "'Press Start 2P', monospace", fontSize: "clamp(14px, 3vw, 24px)", textShadow: "2px 2px 0 rgba(0,0,0,0.9), 0 0 20px rgba(139,92,246,0.3)" }}>
+            Город Хазбиково
+          </h1>
           <p className="text-gray-400 mb-8 text-sm">XazGames · by Xaz&amp;Der1</p>
         </motion.div>
 
@@ -288,18 +411,18 @@ export default function CityPage() {
               whileTap={{ scale: 0.93 }}
               transition={{ type: "spring", stiffness: 400, damping: 20 }}
               className={`flex items-center gap-2 px-4 py-2 rounded-full text-sm font-medium transition-all ${
-                activeTab === t.id
-                  ? "text-white shadow-[0_0_14px_rgba(139,92,246,0.4)]"
-                  : "text-gray-400 hover:text-white"
+                activeTab === t.id ? "text-white" : "text-gray-400 hover:text-white"
               }`}
               style={activeTab === t.id ? {
-                background: "rgba(139,92,246,0.25)",
-                backdropFilter: "blur(12px)",
-                border: "1px solid rgba(139,92,246,0.4)",
+                background: "rgba(80,30,160,0.4)",
+                backdropFilter: "blur(16px)",
+                border: "1px solid rgba(139,92,246,0.45)",
+                boxShadow: "0 0 18px rgba(139,92,246,0.3), inset 0 1px 0 rgba(255,255,255,0.1)",
               } : {
-                background: "rgba(255,255,255,0.04)",
-                backdropFilter: "blur(12px)",
-                border: "1px solid rgba(255,255,255,0.07)",
+                background: "rgba(8,6,18,0.7)",
+                backdropFilter: "blur(16px)",
+                border: "1px solid rgba(255,255,255,0.08)",
+                boxShadow: "0 2px 8px rgba(0,0,0,0.4)",
               }}
             >
               <Icon name={t.icon as "Users"} size={14} fallback="Circle" />
@@ -311,15 +434,9 @@ export default function CityPage() {
         {/* Content */}
         <AnimatePresence mode="wait">
           {activeTab === "residents" && (
-            <motion.div key="residents" initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -8 }} transition={{ duration: 0.3 }}
-              className="rounded-3xl overflow-hidden"
-              style={{
-                background: "rgba(255,255,255,0.03)",
-                backdropFilter: "blur(24px) saturate(180%)",
-                WebkitBackdropFilter: "blur(24px) saturate(180%)",
-                border: "1px solid rgba(255,255,255,0.07)",
-                boxShadow: "0 8px 32px rgba(0,0,0,0.5), inset 0 1px 0 rgba(255,255,255,0.06)",
-              }}
+            <motion.div key="residents"
+              initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -8 }} transition={{ duration: 0.3 }}
+              className="rounded-3xl overflow-hidden glass-dark"
             >
               <div className="px-6 py-4" style={{ borderBottom: "1px solid rgba(255,255,255,0.06)" }}>
                 <h2 className="text-white font-semibold flex items-center gap-2">
@@ -341,7 +458,7 @@ export default function CityPage() {
                       initial={{ opacity: 0, x: -10 }}
                       animate={{ opacity: 1, x: 0 }}
                       transition={{ delay: i * 0.06 }}
-                      whileHover={{ backgroundColor: "rgba(139,92,246,0.08)" }}
+                      whileHover={{ backgroundColor: "rgba(139,92,246,0.1)" }}
                       className="transition-colors cursor-pointer group"
                       style={{ borderBottom: "1px solid rgba(255,255,255,0.04)" }}
                       onClick={() => {
@@ -355,7 +472,9 @@ export default function CityPage() {
                         {r.nick}
                         <Icon name="ArrowUpRight" size={12} className="inline ml-1 opacity-0 group-hover:opacity-60 transition-opacity" fallback="Circle" />
                       </td>
-                      <td className="px-6 py-4 text-violet-400 text-sm">{r.role}</td>
+                      <td className="px-6 py-4 text-sm" style={{ color: roleColor[r.role]?.replace("text-", "") || "#9ca3af" }}>
+                        <span className={roleColor[r.role]}>{r.role}</span>
+                      </td>
                     </motion.tr>
                   ))}
                 </tbody>
@@ -364,46 +483,48 @@ export default function CityPage() {
           )}
 
           {activeTab === "sights" && (
-            <motion.div key="sights" initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -8 }} transition={{ duration: 0.3 }} className="flex flex-col gap-6">
-              {sights.map((s, i) => {
-                const reversed = i % 2 !== 0
-                return (
-                  <motion.div
-                    key={i}
-                    initial={{ opacity: 0, x: reversed ? 20 : -20 }}
-                    animate={{ opacity: 1, x: 0 }}
-                    transition={{ delay: i * 0.1 }}
-                    whileHover={{ scale: 1.015, boxShadow: "0 0 40px rgba(139,92,246,0.2)" }}
-                    className={`rounded-3xl overflow-hidden flex flex-col ${reversed ? "md:flex-row-reverse" : "md:flex-row"}`}
-                    style={{
-                      background: "rgba(255,255,255,0.03)",
-                      backdropFilter: "blur(24px) saturate(180%)",
-                      WebkitBackdropFilter: "blur(24px) saturate(180%)",
-                      border: "1px solid rgba(255,255,255,0.07)",
-                      boxShadow: "0 8px 32px rgba(0,0,0,0.4), inset 0 1px 0 rgba(255,255,255,0.05)",
-                    }}
-                  >
-                    <img src={s.image} alt={s.title} className="w-full md:w-72 h-48 object-cover flex-shrink-0" />
-                    <div className="p-6 flex flex-col justify-center">
-                      <h3 className="text-white font-bold text-lg mb-2">{s.title}</h3>
-                      <p className="text-gray-400 text-sm leading-relaxed">{s.description}</p>
+            <motion.div key="sights"
+              initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -8 }} transition={{ duration: 0.3 }}
+              className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4"
+            >
+              {sights.map((s, i) => (
+                <motion.button
+                  key={i}
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: i * 0.08 }}
+                  whileHover={{ scale: 1.03, boxShadow: "0 0 36px rgba(139,92,246,0.25)" }}
+                  whileTap={{ scale: 0.97 }}
+                  onClick={() => { playSound(); setSelectedSight(s) }}
+                  className="rounded-3xl overflow-hidden text-left glass-dark flex flex-col group cursor-pointer"
+                >
+                  <div className="relative h-44 overflow-hidden">
+                    <img src={s.image} alt={s.title} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
+                    <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+                      style={{ background: "linear-gradient(to bottom, transparent 30%, rgba(139,92,246,0.3) 100%)" }} />
+                    <div className="absolute top-2 right-2 opacity-0 group-hover:opacity-100 transition-opacity duration-200">
+                      <div className="rounded-full p-1.5 glass-btn">
+                        <Icon name="ExternalLink" size={12} className="text-white" fallback="Circle" />
+                      </div>
                     </div>
-                  </motion.div>
-                )
-              })}
+                  </div>
+                  <div className="p-4 flex-1">
+                    <h3 className="text-white font-bold text-sm mb-1">{s.title}</h3>
+                    <p className="text-gray-400 text-xs leading-relaxed line-clamp-2">{s.description}</p>
+                    <div className="mt-3 flex items-center gap-1 text-xs text-violet-400 opacity-0 group-hover:opacity-100 transition-opacity">
+                      <Icon name="Info" size={11} fallback="Circle" />
+                      <span>Нажмите для подробностей</span>
+                    </div>
+                  </div>
+                </motion.button>
+              ))}
             </motion.div>
           )}
 
           {activeTab === "emergency" && (
-            <motion.div key="emergency" initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -8 }} transition={{ duration: 0.3 }}
-              className="rounded-3xl overflow-hidden"
-              style={{
-                background: "rgba(255,255,255,0.03)",
-                backdropFilter: "blur(24px) saturate(180%)",
-                WebkitBackdropFilter: "blur(24px) saturate(180%)",
-                border: "1px solid rgba(255,255,255,0.07)",
-                boxShadow: "0 8px 32px rgba(0,0,0,0.5)",
-              }}
+            <motion.div key="emergency"
+              initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -8 }} transition={{ duration: 0.3 }}
+              className="rounded-3xl overflow-hidden glass-dark"
             >
               <div className="px-6 py-4" style={{ borderBottom: "1px solid rgba(255,255,255,0.06)" }}>
                 <h2 className="text-white font-semibold flex items-center gap-2">
@@ -420,7 +541,8 @@ export default function CityPage() {
                 </thead>
                 <tbody>
                   {emergency.map((e, i) => (
-                    <motion.tr key={i} initial={{ opacity: 0, x: -10 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: i * 0.06 }}
+                    <motion.tr key={i}
+                      initial={{ opacity: 0, x: -10 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: i * 0.06 }}
                       className="transition-colors"
                       style={{ borderBottom: "1px solid rgba(255,255,255,0.04)" }}
                     >
@@ -435,25 +557,15 @@ export default function CityPage() {
           )}
 
           {activeTab === "rules" && (
-            <motion.div key="rules" initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -8 }} transition={{ duration: 0.3 }}
-              className="rounded-3xl p-6"
-              style={{
-                background: "rgba(255,255,255,0.03)",
-                backdropFilter: "blur(24px) saturate(180%)",
-                WebkitBackdropFilter: "blur(24px) saturate(180%)",
-                border: "1px solid rgba(255,255,255,0.07)",
-                boxShadow: "0 8px 32px rgba(0,0,0,0.5)",
-              }}
+            <motion.div key="rules"
+              initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -8 }} transition={{ duration: 0.3 }}
+              className="rounded-3xl p-6 glass-dark"
             >
               <h2 className="text-white font-semibold flex items-center gap-2 mb-6">
                 <Icon name="BookOpen" size={18} className="text-green-400" /> Правила города
               </h2>
               <pre className="text-gray-300 text-sm leading-relaxed whitespace-pre-wrap font-mono rounded-2xl p-6"
-                style={{
-                  background: "rgba(0,0,0,0.25)",
-                  border: "1px solid rgba(255,255,255,0.05)",
-                }}
-              >
+                style={{ background: "rgba(0,0,0,0.3)", border: "1px solid rgba(255,255,255,0.06)" }}>
                 {rulesText}
               </pre>
             </motion.div>
