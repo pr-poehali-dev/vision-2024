@@ -3,7 +3,7 @@ import { motion, AnimatePresence } from "framer-motion"
 import { useState, useEffect } from "react"
 import Icon from "@/components/ui/icon"
 import { LiquidButton } from "@/components/LiquidButton"
-import { playWelcomeSound, useClickSound } from "@/hooks/useClickSound"
+import { tryPlayWelcome, useClickSound } from "@/hooks/useClickSound"
 
 const menuItems = [
   {
@@ -54,8 +54,7 @@ export function HeroSection() {
   const [showMenu, setShowMenu] = useState(false)
 
   useEffect(() => {
-    const t = setTimeout(() => playWelcomeSound(), 400)
-    return () => clearTimeout(t)
+    tryPlayWelcome()
   }, [])
 
   return (
@@ -66,7 +65,7 @@ export function HeroSection() {
         transition={{ duration: 0.5 }}
         className="mb-6 inline-flex items-center gap-2 rounded-full bg-[#1a1a1a] py-2 text-sm px-3"
       >
-        <span className="rounded-full bg-violet-500/20 px-2 py-0.5 text-xs font-medium text-violet-400">ChichWaka</span>
+        <span className="rounded-full bg-violet-500/20 px-2 py-0.5 text-xs font-medium text-violet-400">XazGames</span>
         <span className="text-gray-300">Официальный сайт города Хазбиково</span>
         <Icon name="ArrowUpRight" size={16} className="text-gray-400" />
       </motion.div>
@@ -102,7 +101,7 @@ export function HeroSection() {
               initial={{ opacity: 0, y: 8 }}
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -8 }}
-              transition={{ duration: 0.22 }}
+              transition={{ duration: 0.18 }}
               className="flex flex-col sm:flex-row items-center gap-4"
             >
               <LiquidButton
@@ -128,7 +127,7 @@ export function HeroSection() {
               initial={{ opacity: 0, scale: 0.9, y: 14 }}
               animate={{ opacity: 1, scale: 1, y: 0 }}
               exit={{ opacity: 0, scale: 0.9, y: 14 }}
-              transition={{ duration: 0.28, type: "spring", stiffness: 280, damping: 22 }}
+              transition={{ duration: 0.22, type: "spring", stiffness: 320, damping: 24 }}
               className="flex flex-col items-center gap-3"
             >
               <p className="text-gray-400 text-sm mb-1">Выберите раздел</p>
@@ -138,15 +137,17 @@ export function HeroSection() {
                     key={item.tab}
                     initial={{ opacity: 0, scale: 0.82 }}
                     animate={{ opacity: 1, scale: 1 }}
-                    transition={{ delay: i * 0.065, type: "spring", stiffness: 320, damping: 22 }}
+                    transition={{ delay: i * 0.055, type: "spring", stiffness: 380, damping: 24 }}
                     onClick={() => { playSound(); navigate(`/city?tab=${item.tab}`) }}
                     whileHover={{ scale: 1.06, boxShadow: `0 0 22px 2px ${item.glow}` }}
                     whileTap={{ scale: 0.92 }}
-                    className={`relative flex flex-col items-start gap-2 rounded-xl border ${item.border} px-5 py-4 w-44 text-left overflow-hidden transition-colors`}
+                    className={`relative flex flex-col items-start gap-2 rounded-xl border ${item.border} px-5 py-4 w-56 text-left overflow-hidden transition-colors`}
                     style={{ background: "rgba(17,17,17,0.88)" }}
                   >
-                    <span className="pointer-events-none absolute inset-0 opacity-0 hover:opacity-100 transition-opacity duration-300"
-                      style={{ background: "linear-gradient(135deg, rgba(255,255,255,0.06) 0%, transparent 60%)" }} />
+                    <span
+                      className="pointer-events-none absolute inset-0 opacity-0 hover:opacity-100 transition-opacity duration-200"
+                      style={{ background: "linear-gradient(135deg, rgba(255,255,255,0.06) 0%, transparent 60%)" }}
+                    />
                     <div className={`w-8 h-8 rounded-lg ${item.bg} flex items-center justify-center`}>
                       <Icon name={item.icon as "Users"} size={16} className={item.color} fallback="Circle" />
                     </div>
@@ -157,7 +158,7 @@ export function HeroSection() {
               </div>
               <button
                 onClick={() => setShowMenu(false)}
-                className="text-xs text-gray-500 hover:text-gray-300 transition-colors mt-1"
+                className="text-xs text-gray-500 hover:text-gray-300 transition-colors duration-100 mt-1"
               >
                 ← Назад
               </button>

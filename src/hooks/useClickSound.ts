@@ -34,14 +34,17 @@ export function playWelcomeSound() {
   const ac = getCtx()
   const t = ac.currentTime
 
+  // Приятная мелодия: мягкие синус + небольшой реверб через delay
   const melody = [
-    { freq: 523, start: 0,    dur: 0.18 },
-    { freq: 659, start: 0.16, dur: 0.18 },
-    { freq: 784, start: 0.32, dur: 0.22 },
-    { freq: 1047, start: 0.52, dur: 0.38 },
+    { freq: 392, start: 0,    dur: 0.28 },  // G4
+    { freq: 523, start: 0.22, dur: 0.28 },  // C5
+    { freq: 659, start: 0.44, dur: 0.28 },  // E5
+    { freq: 784, start: 0.66, dur: 0.22 },  // G5
+    { freq: 1047, start: 0.86, dur: 0.55 }, // C6 - долгая финальная
   ]
 
   melody.forEach(({ freq, start, dur }) => {
+    // Основной тон (sine)
     const osc = ac.createOscillator()
     const gain = ac.createGain()
     osc.connect(gain)
@@ -49,10 +52,29 @@ export function playWelcomeSound() {
     osc.type = "sine"
     osc.frequency.setValueAtTime(freq, t + start)
     gain.gain.setValueAtTime(0, t + start)
-    gain.gain.linearRampToValueAtTime(0.05, t + start + 0.02)
-    gain.gain.setValueAtTime(0.05, t + start + dur - 0.07)
+    gain.gain.linearRampToValueAtTime(0.042, t + start + 0.025)
+    gain.gain.setValueAtTime(0.042, t + start + dur - 0.1)
     gain.gain.exponentialRampToValueAtTime(0.001, t + start + dur)
     osc.start(t + start)
     osc.stop(t + start + dur + 0.01)
+
+    // Обертон для теплоты
+    const osc2 = ac.createOscillator()
+    const gain2 = ac.createGain()
+    osc2.connect(gain2)
+    gain2.connect(ac.destination)
+    osc2.type = "sine"
+    osc2.frequency.setValueAtTime(freq * 2, t + start)
+    gain2.gain.setValueAtTime(0, t + start)
+    gain2.gain.linearRampToValueAtTime(0.012, t + start + 0.03)
+    gain2.gain.exponentialRampToValueAtTime(0.001, t + start + dur * 0.7)
+    osc2.start(t + start)
+    osc2.stop(t + start + dur)
   })
+}
+
+export function tryPlayWelcome() {
+  if (sessionStorage.getItem("welcomed")) return
+  sessionStorage.setItem("welcomed", "1")
+  setTimeout(() => playWelcomeSound(), 350)
 }

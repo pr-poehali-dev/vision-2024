@@ -102,7 +102,7 @@ export default function CityPage() {
 
         <motion.div initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5 }}>
           <h1 className="text-3xl font-bold text-white mb-2">Город Хазбиково</h1>
-          <p className="text-gray-400 mb-8 text-sm">Сервер ChichWaka · by Xaz&amp;Der1</p>
+          <p className="text-gray-400 mb-8 text-sm">XazGames · by Xaz&amp;Der1</p>
         </motion.div>
 
         {/* Tabs */}
@@ -155,11 +155,15 @@ export default function CityPage() {
                       initial={{ opacity: 0, x: -10 }}
                       animate={{ opacity: 1, x: 0 }}
                       transition={{ delay: i * 0.06 }}
-                      whileHover={{ backgroundColor: "rgba(139,92,246,0.06)" }}
-                      className="border-b border-[#1a1a1a] transition-colors cursor-default"
+                      whileHover={{ backgroundColor: "rgba(139,92,246,0.08)" }}
+                      className="border-b border-[#1a1a1a] transition-colors cursor-pointer group"
+                      onClick={() => { playSound(); navigate(`/resident/${r.nick.toLowerCase()}`) }}
                     >
                       <td className="px-6 py-4 text-gray-500 text-sm">{i + 1}</td>
-                      <td className="px-6 py-4 text-white font-medium text-sm">{r.nick}</td>
+                      <td className="px-6 py-4 text-white font-medium text-sm group-hover:text-violet-300 transition-colors duration-100">
+                        {r.nick}
+                        <Icon name="ArrowUpRight" size={12} className="inline ml-1 opacity-0 group-hover:opacity-60 transition-opacity" fallback="Circle" />
+                      </td>
                       <td className="px-6 py-4 text-violet-400 text-sm">{r.role}</td>
                     </motion.tr>
                   ))}
