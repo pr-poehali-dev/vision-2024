@@ -13,7 +13,7 @@ export const residentsData: Record<string, {
   "xazbik_": {
     nick: "Xazbik_",
     role: "Мэр города",
-    description: "Основатель и мэр города Хазбиково на сервере ChichWaka. Стоял у истоков города с самого начала, организовывает городскую жизнь, принимает ключевые решения и следит за порядком.",
+    description: "Основатель и мэр города Хазбиково на сервере ChichVAKA. Стоял у истоков города с самого начала, организовывает городскую жизнь, принимает ключевые решения и следит за порядком.",
   },
   "der1zon": {
     nick: "Der1zon",
@@ -66,7 +66,7 @@ export default function ResidentPage() {
 
   if (!resident) {
     return (
-      <main className="min-h-screen bg-[#0a0a0a]">
+      <main className="min-h-screen" style={{ background: "linear-gradient(135deg, #0a0a14 0%, #0d0a1a 50%, #0a0a0a 100%)" }}>
         <Header />
         <section className="flex flex-col items-center justify-center py-32 gap-4">
           <p className="text-gray-400 text-lg">Житель не найден</p>
@@ -84,7 +84,7 @@ export default function ResidentPage() {
   const badge = roleBg[resident.role] || "bg-gray-500/10 border-gray-500/25"
 
   return (
-    <main className="min-h-screen bg-[#0a0a0a]">
+    <main className="min-h-screen" style={{ background: "linear-gradient(135deg, #0a0a14 0%, #0d0a1a 50%, #0a0a0a 100%)" }}>
       <Header />
 
       <section className="max-w-4xl mx-auto px-4 py-10">
@@ -110,8 +110,8 @@ export default function ResidentPage() {
             transition={{ duration: 0.5, delay: 0.1 }}
             className="flex flex-col items-center gap-3 flex-shrink-0"
           >
-            <div className="rounded-2xl bg-[#111] border border-[#222] p-4 flex items-center justify-center"
-              style={{ minWidth: 160, minHeight: 220 }}>
+            <div className="rounded-2xl p-4 flex items-center justify-center"
+              style={{ background: "rgba(255,255,255,0.04)", backdropFilter: "blur(16px)", border: "1px solid rgba(255,255,255,0.07)", minWidth: 160, minHeight: 220 }}>
               <img
                 src={skinUrl}
                 alt={`Скин ${resident.nick}`}
@@ -135,7 +135,7 @@ export default function ResidentPage() {
               <img src={headUrl} alt="head" className="w-10 h-10 rounded-lg" />
               <div>
                 <h1 className="text-2xl font-bold text-white">{resident.nick}</h1>
-                <span className={`text-sm ${color}`}>Игрок ChichWaka</span>
+                <span className={`text-sm ${color}`}>Игрок ChichVAKA</span>
               </div>
             </div>
 
@@ -144,14 +144,16 @@ export default function ResidentPage() {
               <span className={`text-sm font-medium ${color}`}>{resident.role}</span>
             </div>
 
-            <div className="rounded-2xl bg-[#111] border border-[#222] p-5">
+            <div className="rounded-2xl p-5"
+              style={{ background: "rgba(255,255,255,0.04)", backdropFilter: "blur(16px)", border: "1px solid rgba(255,255,255,0.07)" }}>
               <h2 className="text-white font-semibold mb-3 flex items-center gap-2">
                 <Icon name="User" size={16} className="text-violet-400" /> О жителе
               </h2>
               <p className="text-gray-400 text-sm leading-relaxed">{resident.description}</p>
             </div>
 
-            <div className="rounded-2xl bg-[#111] border border-[#222] p-5">
+            <div className="rounded-2xl p-5"
+              style={{ background: "rgba(255,255,255,0.04)", backdropFilter: "blur(16px)", border: "1px solid rgba(255,255,255,0.07)" }}>
               <h2 className="text-white font-semibold mb-3 flex items-center gap-2">
                 <Icon name="Info" size={16} className="text-violet-400" /> Информация
               </h2>
@@ -170,7 +172,7 @@ export default function ResidentPage() {
                 </div>
                 <div className="flex items-center justify-between">
                   <span className="text-gray-500">Сервер</span>
-                  <span className="text-gray-300">ChichWaka</span>
+                  <span className="text-gray-300">ChichVAKA</span>
                 </div>
               </div>
             </div>
@@ -178,7 +180,7 @@ export default function ResidentPage() {
         </motion.div>
       </section>
 
-      <footer className="py-8 text-center text-sm text-gray-500 border-t border-[#1a1a1a] mt-8">
+      <footer className="py-8 text-center text-sm text-gray-500 mt-8" style={{ borderTop: "1px solid rgba(255,255,255,0.06)" }}>
         <p className="font-medium text-gray-400 mb-1">XAZBGAMES.RU</p>
         <p>© 2026 Хазбиково. Все права защищены.</p>
         <div className="flex items-center justify-center gap-6 mt-3">

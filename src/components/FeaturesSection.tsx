@@ -7,7 +7,7 @@ const features = [
   {
     icon: "Users",
     title: "Жители города",
-    description: "Познакомьтесь с жителями города Хазбиково — игроками сервера ChichWaka.",
+    description: "Познакомьтесь с жителями города Хазбиково — игроками сервера ChichVAKA.",
     tab: "residents",
     color: "text-violet-400",
     bg: "bg-violet-500/10",
@@ -67,7 +67,14 @@ export function FeaturesSection() {
               boxShadow: `0 0 22px 2px ${glowMap[f.color]}`,
             }}
             whileTap={{ scale: 0.94 }}
-            className="rounded-2xl bg-[#111] border border-[#222] p-5 flex flex-col gap-3 cursor-pointer hover:border-violet-500/40 hover:bg-[#161616] transition-colors relative overflow-hidden"
+            className="rounded-2xl p-5 flex flex-col gap-3 cursor-pointer transition-all relative overflow-hidden"
+            style={{
+              background: "rgba(255,255,255,0.03)",
+              backdropFilter: "blur(20px) saturate(180%)",
+              WebkitBackdropFilter: "blur(20px) saturate(180%)",
+              border: "1px solid rgba(255,255,255,0.07)",
+              boxShadow: "0 4px 24px rgba(0,0,0,0.4), inset 0 1px 0 rgba(255,255,255,0.06)",
+            }}
             onClick={() => { playSound(); navigate(`/city?tab=${f.tab}`) }}
           >
             <span className="pointer-events-none absolute inset-0 opacity-0 hover:opacity-100 transition-opacity duration-300 rounded-2xl"

@@ -13,8 +13,8 @@ const menuItems = [
     tab: "residents",
     color: "text-violet-400",
     glow: "rgba(139,92,246,0.45)",
-    bg: "bg-violet-500/10",
-    border: "border-violet-500/30",
+    borderColor: "rgba(139,92,246,0.3)",
+    bgColor: "rgba(139,92,246,0.08)",
   },
   {
     icon: "MapPin",
@@ -23,8 +23,8 @@ const menuItems = [
     tab: "sights",
     color: "text-blue-400",
     glow: "rgba(59,130,246,0.45)",
-    bg: "bg-blue-500/10",
-    border: "border-blue-500/30",
+    borderColor: "rgba(59,130,246,0.3)",
+    bgColor: "rgba(59,130,246,0.08)",
   },
   {
     icon: "Shield",
@@ -33,8 +33,8 @@ const menuItems = [
     tab: "emergency",
     color: "text-red-400",
     glow: "rgba(239,68,68,0.45)",
-    bg: "bg-red-500/10",
-    border: "border-red-500/30",
+    borderColor: "rgba(239,68,68,0.3)",
+    bgColor: "rgba(239,68,68,0.08)",
   },
   {
     icon: "BookOpen",
@@ -43,8 +43,8 @@ const menuItems = [
     tab: "rules",
     color: "text-green-400",
     glow: "rgba(34,197,94,0.45)",
-    bg: "bg-green-500/10",
-    border: "border-green-500/30",
+    borderColor: "rgba(34,197,94,0.3)",
+    bgColor: "rgba(34,197,94,0.08)",
   },
 ]
 
@@ -58,36 +58,44 @@ export function HeroSection() {
   }, [])
 
   return (
-    <section className="flex flex-col items-center justify-center px-4 pt-12 pb-8 text-center">
-      <motion.div
-        initial={{ opacity: 0, y: -16 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.5 }}
-        className="mb-6 inline-flex items-center gap-2 rounded-full bg-[#1a1a1a] py-2 text-sm px-3"
-      >
-        <span className="rounded-full bg-violet-500/20 px-2 py-0.5 text-xs font-medium text-violet-400">XazGames</span>
-        <span className="text-gray-300">Официальный сайт города Хазбиково</span>
-        <Icon name="ArrowUpRight" size={16} className="text-gray-400" />
-      </motion.div>
+    <section className="flex flex-col items-center justify-center px-4 pt-12 pb-8 text-center overflow-hidden">
+      {/* Верхний контент — уезжает вниз при showMenu */}
+      <AnimatePresence>
+        {!showMenu && (
+          <motion.div
+            key="hero-top"
+            className="flex flex-col items-center"
+            initial={{ opacity: 0, y: -30 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: 80 }}
+            transition={{ duration: 0.55, ease: [0.4, 0, 0.2, 1] }}
+          >
+            <motion.div
+              className="mb-6 inline-flex items-center gap-2 rounded-full py-2 text-sm px-3"
+              style={{
+                background: "rgba(255,255,255,0.05)",
+                backdropFilter: "blur(16px)",
+                border: "1px solid rgba(255,255,255,0.08)",
+              }}
+            >
+              <span className="rounded-full px-2 py-0.5 text-xs font-medium text-violet-400"
+                style={{ background: "rgba(139,92,246,0.15)" }}>XazGames</span>
+              <span className="text-gray-300">Официальный сайт города Хазбиково</span>
+              <Icon name="ArrowUpRight" size={16} className="text-gray-400" />
+            </motion.div>
 
-      <motion.h1
-        initial={{ opacity: 0, y: 24 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.6, delay: 0.12 }}
-        className="mb-4 max-w-3xl text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight text-white text-balance"
-      >
-        XazGames
-      </motion.h1>
+            <h1 className="mb-4 max-w-3xl text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight text-white text-balance">
+              ChichVAKA Xaz&amp;Der1 Minecraft
+            </h1>
 
-      <motion.p
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.6, delay: 0.22 }}
-        className="mb-8 max-w-xl text-gray-400 leading-relaxed"
-      >
-        Добро пожаловать на сайт города <span className="text-violet-400 font-medium">'Хазбиково'</span>, здесь вы можете ознакомиться со всей информацией о городе, а также зайти на тест-сервер, созданный такими игроками как <span className="text-white font-medium">Xazbik_</span> и <span className="text-white font-medium">Der1zon</span> by Xaz&amp;Der1
-      </motion.p>
+            <p className="mb-8 max-w-xl text-gray-400 leading-relaxed">
+              Добро пожаловать на сайт города <span className="text-violet-400 font-medium">'Хазбиково'</span>, здесь вы можете ознакомиться со всей информацией о городе, а также зайти на тест-сервер, созданный такими игроками как <span className="text-white font-medium">Xazbik_</span> и <span className="text-white font-medium">Der1zon</span> by Xaz&amp;Der1
+            </p>
+          </motion.div>
+        )}
+      </AnimatePresence>
 
+      {/* Кнопки */}
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
@@ -100,13 +108,13 @@ export function HeroSection() {
               key="hero-btns"
               initial={{ opacity: 0, y: 8 }}
               animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -8 }}
-              transition={{ duration: 0.18 }}
+              exit={{ opacity: 0, y: 12 }}
+              transition={{ duration: 0.2 }}
               className="flex flex-col sm:flex-row items-center gap-4"
             >
               <LiquidButton
                 variant="primary"
-                onClick={() => setShowMenu(true)}
+                onClick={() => { playSound(); setShowMenu(true) }}
                 glowColor="rgba(139,92,246,0.5)"
                 className="rounded-full px-8 py-3 text-base"
               >
@@ -124,44 +132,61 @@ export function HeroSection() {
           ) : (
             <motion.div
               key="menu-grid"
-              initial={{ opacity: 0, scale: 0.9, y: 14 }}
+              initial={{ opacity: 0, scale: 0.88, y: -20 }}
               animate={{ opacity: 1, scale: 1, y: 0 }}
-              exit={{ opacity: 0, scale: 0.9, y: 14 }}
-              transition={{ duration: 0.22, type: "spring", stiffness: 320, damping: 24 }}
-              className="flex flex-col items-center gap-3"
+              exit={{ opacity: 0, scale: 0.88, y: -20 }}
+              transition={{ duration: 0.38, type: "spring", stiffness: 300, damping: 26 }}
+              className="flex flex-col items-center gap-4 mt-2"
             >
-              <p className="text-gray-400 text-sm mb-1">Выберите раздел</p>
+              <motion.p
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ delay: 0.15 }}
+                className="text-gray-400 text-sm"
+              >
+                Выберите раздел
+              </motion.p>
               <div className="grid grid-cols-2 gap-3">
                 {menuItems.map((item, i) => (
                   <motion.button
                     key={item.tab}
-                    initial={{ opacity: 0, scale: 0.82 }}
-                    animate={{ opacity: 1, scale: 1 }}
-                    transition={{ delay: i * 0.055, type: "spring", stiffness: 380, damping: 24 }}
+                    initial={{ opacity: 0, scale: 0.82, y: 12 }}
+                    animate={{ opacity: 1, scale: 1, y: 0 }}
+                    transition={{ delay: 0.1 + i * 0.07, type: "spring", stiffness: 360, damping: 26 }}
                     onClick={() => { playSound(); navigate(`/city?tab=${item.tab}`) }}
-                    whileHover={{ scale: 1.06, boxShadow: `0 0 22px 2px ${item.glow}` }}
+                    whileHover={{ scale: 1.06, boxShadow: `0 0 28px 2px ${item.glow}` }}
                     whileTap={{ scale: 0.92 }}
-                    className={`relative flex flex-col items-start gap-2 rounded-xl border ${item.border} px-5 py-4 w-56 text-left overflow-hidden transition-colors`}
-                    style={{ background: "rgba(17,17,17,0.88)" }}
+                    className="relative flex flex-col items-start gap-2 rounded-2xl px-5 py-4 w-56 text-left overflow-hidden transition-all"
+                    style={{
+                      background: item.bgColor,
+                      backdropFilter: "blur(20px) saturate(180%)",
+                      WebkitBackdropFilter: "blur(20px) saturate(180%)",
+                      border: `1px solid ${item.borderColor}`,
+                      boxShadow: "0 4px 20px rgba(0,0,0,0.4), inset 0 1px 0 rgba(255,255,255,0.08)",
+                    }}
                   >
                     <span
                       className="pointer-events-none absolute inset-0 opacity-0 hover:opacity-100 transition-opacity duration-200"
                       style={{ background: "linear-gradient(135deg, rgba(255,255,255,0.06) 0%, transparent 60%)" }}
                     />
-                    <div className={`w-8 h-8 rounded-lg ${item.bg} flex items-center justify-center`}>
+                    <div className="w-8 h-8 rounded-xl flex items-center justify-center"
+                      style={{ background: "rgba(255,255,255,0.06)", border: "1px solid rgba(255,255,255,0.08)" }}>
                       <Icon name={item.icon as "Users"} size={16} className={item.color} fallback="Circle" />
                     </div>
                     <span className="text-white text-sm font-semibold leading-tight">{item.label}</span>
-                    <span className={`text-xs ${item.color} opacity-75`}>{item.desc}</span>
+                    <span className={`text-xs ${item.color} opacity-80`}>{item.desc}</span>
                   </motion.button>
                 ))}
               </div>
-              <button
+              <motion.button
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ delay: 0.45 }}
                 onClick={() => setShowMenu(false)}
-                className="text-xs text-gray-500 hover:text-gray-300 transition-colors duration-100 mt-1"
+                className="text-xs text-gray-500 hover:text-gray-300 transition-colors duration-150 mt-1"
               >
                 ← Назад
-              </button>
+              </motion.button>
             </motion.div>
           )}
         </AnimatePresence>

@@ -11,7 +11,7 @@ const sections = [
     icon: "Globe",
     color: "text-violet-400",
     bg: "bg-violet-500/10",
-    content: `Сайт был создан компанией Xaz&Der1 специально для города 'Хазбиково' на сервере ChichWaka. Наш сайт создан, чтобы познакомить вас с уникальными чертами города.
+    content: `Сайт был создан компанией Xaz&Der1 специально для города 'Хазбиково' на сервере ChichVAKA. Наш сайт создан, чтобы познакомить вас с уникальными чертами города.
 
 На сайте можно найти: Жители города, Тест-сервер города, Правила города, Достопримечательности города и многое другое.
 
@@ -31,7 +31,7 @@ const sections = [
     icon: "Users",
     color: "text-green-400",
     bg: "bg-green-500/10",
-    content: `Компания Xaz&Der1 начала своё производство совсем не давно. В компанию входят игроки ChichWaka Xazbik_ и Der1zon. О данных игроках есть информация: Они лучшие друзья и всегда на сервере и не только играли вместе.
+    content: `Компания Xaz&Der1 начала своё производство совсем не давно. В компанию входят игроки ChichVAKA Xazbik_ и Der1zon. О данных игроках есть информация: Они лучшие друзья и всегда на сервере и не только играли вместе.
 
 Всё начиналось ещё очень давно, как игрок Xazbik_ создал свой город и нашёл друга Der1zon, с которым был знаком ещё с первого сезона сервера. Они начали общаться в тг и дс ежедневно, каждый день они улучшали свой город.
 
@@ -46,7 +46,7 @@ export default function AboutPage() {
   const playSound = useClickSound()
 
   return (
-    <main className="min-h-screen bg-[#0a0a0a]">
+    <main className="min-h-screen" style={{ background: "linear-gradient(135deg, #0a0a14 0%, #0d0a1a 50%, #0a0a0a 100%)" }}>
       <Header />
 
       <section className="max-w-5xl mx-auto px-4 py-10">
@@ -70,10 +70,17 @@ export default function AboutPage() {
               key={i}
               initial={{ opacity: 0, y: 24 }}
               whileInView={{ opacity: 1, y: 0 }}
-              whileHover={{ scale: 1.02, boxShadow: "0 0 24px rgba(139,92,246,0.15)" }}
+              whileHover={{ scale: 1.02, boxShadow: "0 0 32px rgba(139,92,246,0.2)" }}
               viewport={{ once: true }}
               transition={{ duration: 0.5, delay: i * 0.1 }}
-              className="rounded-2xl bg-[#111] border border-[#222] p-6 flex flex-col cursor-default"
+              className="rounded-2xl p-6 flex flex-col cursor-default"
+              style={{
+                background: "rgba(255,255,255,0.03)",
+                backdropFilter: "blur(24px) saturate(180%)",
+                WebkitBackdropFilter: "blur(24px) saturate(180%)",
+                border: "1px solid rgba(255,255,255,0.07)",
+                boxShadow: "0 4px 24px rgba(0,0,0,0.4), inset 0 1px 0 rgba(255,255,255,0.05)",
+              }}
             >
               <div className="flex items-center gap-3 mb-4">
                 <div className={`w-9 h-9 rounded-xl ${s.bg} flex items-center justify-center flex-shrink-0`}>
@@ -89,7 +96,7 @@ export default function AboutPage() {
         </div>
       </section>
 
-      <footer className="py-8 text-center text-sm text-gray-500 border-t border-[#1a1a1a] mt-8">
+      <footer className="py-8 text-center text-sm text-gray-500 mt-8" style={{ borderTop: "1px solid rgba(255,255,255,0.06)" }}>
         <p className="font-medium text-gray-400 mb-1">XAZBGAMES.RU</p>
         <p>© 2026 Хазбиково. Все права защищены.</p>
         <div className="flex items-center justify-center gap-6 mt-3">
