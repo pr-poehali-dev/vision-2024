@@ -1,4 +1,5 @@
 import { useNavigate } from "react-router-dom"
+import { motion } from "framer-motion"
 import Icon from "@/components/ui/icon"
 
 const features = [
@@ -43,10 +44,15 @@ export function FeaturesSection() {
       <h2 className="text-center text-2xl font-bold text-white mb-2">Разделы города</h2>
       <p className="text-center text-gray-400 mb-8 text-sm">Выберите раздел для ознакомления</p>
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4 max-w-6xl mx-auto">
-        {features.map((f) => (
-          <div
+        {features.map((f, i) => (
+          <motion.div
             key={f.tab}
-            className="rounded-2xl bg-[#111] border border-[#222] p-5 flex flex-col gap-3 cursor-pointer hover:border-violet-500/40 hover:bg-[#161616] transition-all"
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.5, delay: i * 0.1 }}
+            whileHover={{ scale: 1.03, y: -4 }}
+            className="rounded-2xl bg-[#111] border border-[#222] p-5 flex flex-col gap-3 cursor-pointer hover:border-violet-500/40 hover:bg-[#161616] transition-colors"
             onClick={() => navigate(`/city?tab=${f.tab}`)}
           >
             <div className={`w-10 h-10 rounded-xl ${f.bg} flex items-center justify-center`}>
@@ -57,7 +63,7 @@ export function FeaturesSection() {
             <div className={`text-xs font-medium ${f.color} flex items-center gap-1 mt-auto`}>
               Открыть <Icon name="ArrowRight" size={12} fallback="ArrowUpRight" />
             </div>
-          </div>
+          </motion.div>
         ))}
       </div>
     </section>

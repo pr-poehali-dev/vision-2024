@@ -1,3 +1,4 @@
+import { motion } from "framer-motion"
 import Icon from "@/components/ui/icon"
 
 const items = [
@@ -12,11 +13,17 @@ const items = [
 export function PartnersSection() {
   return (
     <section className="flex flex-wrap items-center justify-center gap-6 md:gap-10 px-4 py-8">
-      {items.map((item) => (
-        <div key={item.name} className="flex items-center gap-2 text-gray-500 hover:text-gray-400 transition-colors">
+      {items.map((item, i) => (
+        <motion.div
+          key={item.name}
+          initial={{ opacity: 0, y: 10 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.4, delay: 0.4 + i * 0.06 }}
+          className="flex items-center gap-2 text-gray-500 hover:text-gray-400 transition-colors"
+        >
           <Icon name={item.icon as "Server"} size={16} fallback="Circle" />
           <span className="text-sm font-medium">{item.name}</span>
-        </div>
+        </motion.div>
       ))}
     </section>
   )

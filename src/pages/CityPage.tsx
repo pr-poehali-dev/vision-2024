@@ -1,4 +1,5 @@
 import { useSearchParams, useNavigate } from "react-router-dom"
+import { motion, AnimatePresence } from "framer-motion"
 import { Header } from "@/components/Header"
 import Icon from "@/components/ui/icon"
 import { Button } from "@/components/ui/button"
@@ -84,11 +85,18 @@ export default function CityPage() {
           <Icon name="ArrowLeft" size={16} className="mr-2" /> На главную
         </Button>
 
-        <h1 className="text-3xl font-bold text-white mb-2">Город Хазбиково</h1>
-        <p className="text-gray-400 mb-8 text-sm">Сервер ChichWaka · by Xaz&amp;Der1</p>
+        <motion.div initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5 }}>
+          <h1 className="text-3xl font-bold text-white mb-2">Город Хазбиково</h1>
+          <p className="text-gray-400 mb-8 text-sm">Сервер ChichWaka · by Xaz&amp;Der1</p>
+        </motion.div>
 
         {/* Tabs */}
-        <div className="flex flex-wrap gap-2 mb-8">
+        <motion.div
+          initial={{ opacity: 0, y: 10 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.4, delay: 0.15 }}
+          className="flex flex-wrap gap-2 mb-8"
+        >
           {tabs.map((t) => (
             <button
               key={t.id}
@@ -103,93 +111,91 @@ export default function CityPage() {
               {t.label}
             </button>
           ))}
-        </div>
+        </motion.div>
 
         {/* Content */}
-        {activeTab === "residents" && (
-          <div className="rounded-2xl bg-[#111] border border-[#222] overflow-hidden">
-            <div className="px-6 py-4 border-b border-[#222]">
-              <h2 className="text-white font-semibold flex items-center gap-2">
-                <Icon name="Users" size={18} className="text-violet-400" /> Жители города Хазбиково
-              </h2>
-            </div>
-            <table className="w-full">
-              <thead>
-                <tr className="border-b border-[#222]">
-                  <th className="text-left px-6 py-3 text-xs text-gray-500 uppercase tracking-wider">#</th>
-                  <th className="text-left px-6 py-3 text-xs text-gray-500 uppercase tracking-wider">Ник</th>
-                  <th className="text-left px-6 py-3 text-xs text-gray-500 uppercase tracking-wider">Роль</th>
-                </tr>
-              </thead>
-              <tbody>
-                {residents.map((r, i) => (
-                  <tr key={i} className="border-b border-[#1a1a1a] hover:bg-[#161616] transition-colors">
-                    <td className="px-6 py-4 text-gray-500 text-sm">{i + 1}</td>
-                    <td className="px-6 py-4 text-white font-medium text-sm">{r.nick}</td>
-                    <td className="px-6 py-4 text-violet-400 text-sm">{r.role}</td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
-        )}
-
-        {activeTab === "sights" && (
-          <div className="flex flex-col gap-8">
-            {sights.map((s, i) => (
-              <div key={i} className="rounded-2xl bg-[#111] border border-[#222] overflow-hidden flex flex-col md:flex-row">
-                <img
-                  src={s.image}
-                  alt={s.title}
-                  className="w-full md:w-64 h-48 object-cover"
-                />
-                <div className="p-6 flex flex-col justify-center">
-                  <h3 className="text-white font-bold text-lg mb-2">{s.title}</h3>
-                  <p className="text-gray-400 text-sm leading-relaxed">{s.description}</p>
-                </div>
+        <AnimatePresence mode="wait">
+          {activeTab === "residents" && (
+            <motion.div key="residents" initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -8 }} transition={{ duration: 0.3 }} className="rounded-2xl bg-[#111] border border-[#222] overflow-hidden">
+              <div className="px-6 py-4 border-b border-[#222]">
+                <h2 className="text-white font-semibold flex items-center gap-2">
+                  <Icon name="Users" size={18} className="text-violet-400" /> Жители города Хазбиково
+                </h2>
               </div>
-            ))}
-          </div>
-        )}
-
-        {activeTab === "emergency" && (
-          <div className="rounded-2xl bg-[#111] border border-[#222] overflow-hidden">
-            <div className="px-6 py-4 border-b border-[#222]">
-              <h2 className="text-white font-semibold flex items-center gap-2">
-                <Icon name="Shield" size={18} className="text-red-400" /> ЧС города Хазбиково
-              </h2>
-            </div>
-            <table className="w-full">
-              <thead>
-                <tr className="border-b border-[#222]">
-                  <th className="text-left px-6 py-3 text-xs text-gray-500 uppercase tracking-wider">#</th>
-                  <th className="text-left px-6 py-3 text-xs text-gray-500 uppercase tracking-wider">Ник игрока</th>
-                  <th className="text-left px-6 py-3 text-xs text-gray-500 uppercase tracking-wider">Событие</th>
-                </tr>
-              </thead>
-              <tbody>
-                {emergency.map((e, i) => (
-                  <tr key={i} className="border-b border-[#1a1a1a] hover:bg-[#161616] transition-colors">
-                    <td className="px-6 py-4 text-gray-500 text-sm">{i + 1}</td>
-                    <td className="px-6 py-4 text-white font-medium text-sm">{e.nick}</td>
-                    <td className="px-6 py-4 text-red-400 text-sm">{e.event}</td>
+              <table className="w-full">
+                <thead>
+                  <tr className="border-b border-[#222]">
+                    <th className="text-left px-6 py-3 text-xs text-gray-500 uppercase tracking-wider">#</th>
+                    <th className="text-left px-6 py-3 text-xs text-gray-500 uppercase tracking-wider">Ник</th>
+                    <th className="text-left px-6 py-3 text-xs text-gray-500 uppercase tracking-wider">Роль</th>
                   </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
-        )}
+                </thead>
+                <tbody>
+                  {residents.map((r, i) => (
+                    <motion.tr key={i} initial={{ opacity: 0, x: -10 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: i * 0.06 }} className="border-b border-[#1a1a1a] hover:bg-[#161616] transition-colors">
+                      <td className="px-6 py-4 text-gray-500 text-sm">{i + 1}</td>
+                      <td className="px-6 py-4 text-white font-medium text-sm">{r.nick}</td>
+                      <td className="px-6 py-4 text-violet-400 text-sm">{r.role}</td>
+                    </motion.tr>
+                  ))}
+                </tbody>
+              </table>
+            </motion.div>
+          )}
 
-        {activeTab === "rules" && (
-          <div className="rounded-2xl bg-[#111] border border-[#222] p-6">
-            <h2 className="text-white font-semibold flex items-center gap-2 mb-6">
-              <Icon name="BookOpen" size={18} className="text-green-400" /> Правила города
-            </h2>
-            <pre className="text-gray-300 text-sm leading-relaxed whitespace-pre-wrap font-mono bg-[#0d0d0d] rounded-xl p-6 border border-[#1e1e1e]">
-              {rulesText}
-            </pre>
-          </div>
-        )}
+          {activeTab === "sights" && (
+            <motion.div key="sights" initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -8 }} transition={{ duration: 0.3 }} className="flex flex-col gap-8">
+              {sights.map((s, i) => (
+                <motion.div key={i} initial={{ opacity: 0, x: -20 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: i * 0.12 }} className="rounded-2xl bg-[#111] border border-[#222] overflow-hidden flex flex-col md:flex-row">
+                  <img src={s.image} alt={s.title} className="w-full md:w-64 h-48 object-cover" />
+                  <div className="p-6 flex flex-col justify-center">
+                    <h3 className="text-white font-bold text-lg mb-2">{s.title}</h3>
+                    <p className="text-gray-400 text-sm leading-relaxed">{s.description}</p>
+                  </div>
+                </motion.div>
+              ))}
+            </motion.div>
+          )}
+
+          {activeTab === "emergency" && (
+            <motion.div key="emergency" initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -8 }} transition={{ duration: 0.3 }} className="rounded-2xl bg-[#111] border border-[#222] overflow-hidden">
+              <div className="px-6 py-4 border-b border-[#222]">
+                <h2 className="text-white font-semibold flex items-center gap-2">
+                  <Icon name="Shield" size={18} className="text-red-400" /> ЧС города Хазбиково
+                </h2>
+              </div>
+              <table className="w-full">
+                <thead>
+                  <tr className="border-b border-[#222]">
+                    <th className="text-left px-6 py-3 text-xs text-gray-500 uppercase tracking-wider">#</th>
+                    <th className="text-left px-6 py-3 text-xs text-gray-500 uppercase tracking-wider">Ник игрока</th>
+                    <th className="text-left px-6 py-3 text-xs text-gray-500 uppercase tracking-wider">Событие</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {emergency.map((e, i) => (
+                    <motion.tr key={i} initial={{ opacity: 0, x: -10 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: i * 0.06 }} className="border-b border-[#1a1a1a] hover:bg-[#161616] transition-colors">
+                      <td className="px-6 py-4 text-gray-500 text-sm">{i + 1}</td>
+                      <td className="px-6 py-4 text-white font-medium text-sm">{e.nick}</td>
+                      <td className="px-6 py-4 text-red-400 text-sm">{e.event}</td>
+                    </motion.tr>
+                  ))}
+                </tbody>
+              </table>
+            </motion.div>
+          )}
+
+          {activeTab === "rules" && (
+            <motion.div key="rules" initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -8 }} transition={{ duration: 0.3 }} className="rounded-2xl bg-[#111] border border-[#222] p-6">
+              <h2 className="text-white font-semibold flex items-center gap-2 mb-6">
+                <Icon name="BookOpen" size={18} className="text-green-400" /> Правила города
+              </h2>
+              <pre className="text-gray-300 text-sm leading-relaxed whitespace-pre-wrap font-mono bg-[#0d0d0d] rounded-xl p-6 border border-[#1e1e1e]">
+                {rulesText}
+              </pre>
+            </motion.div>
+          )}
+        </AnimatePresence>
       </section>
 
       <footer className="py-8 text-center text-sm text-gray-500 border-t border-[#1a1a1a] mt-8">

@@ -1,4 +1,5 @@
 import { useNavigate } from "react-router-dom"
+import { motion } from "framer-motion"
 import { Header } from "@/components/Header"
 import { Button } from "@/components/ui/button"
 import Icon from "@/components/ui/icon"
@@ -55,12 +56,21 @@ export default function AboutPage() {
           <Icon name="ArrowLeft" size={16} className="mr-2" /> На главную
         </Button>
 
-        <h1 className="text-3xl font-bold text-white mb-2">Описание</h1>
-        <p className="text-gray-400 mb-10 text-sm">XazGames · by Xaz&amp;Der1</p>
+        <motion.div initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5 }}>
+          <h1 className="text-3xl font-bold text-white mb-2">Описание</h1>
+          <p className="text-gray-400 mb-10 text-sm">XazGames · by Xaz&amp;Der1</p>
+        </motion.div>
 
         <div className="flex flex-col gap-6">
           {sections.map((s, i) => (
-            <div key={i} className="rounded-2xl bg-[#111] border border-[#222] p-6">
+            <motion.div
+              key={i}
+              initial={{ opacity: 0, y: 24 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.5, delay: i * 0.1 }}
+              className="rounded-2xl bg-[#111] border border-[#222] p-6"
+            >
               <div className="flex items-center gap-3 mb-4">
                 <div className={`w-9 h-9 rounded-xl ${s.bg} flex items-center justify-center flex-shrink-0`}>
                   <Icon name={s.icon as "Globe"} size={18} className={s.color} fallback="Circle" />
@@ -70,7 +80,7 @@ export default function AboutPage() {
               <div className="text-gray-400 text-sm leading-relaxed whitespace-pre-line">
                 {s.content}
               </div>
-            </div>
+            </motion.div>
           ))}
         </div>
       </section>
