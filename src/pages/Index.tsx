@@ -16,7 +16,7 @@ export default function Index() {
         <div className="flex items-center justify-center gap-6 mt-3">
           <a href="/" className="hover:text-gray-300 transition-colors">Главная</a>
           <a href="/city?tab=residents" className="hover:text-gray-300 transition-colors">Жители</a>
-          <a href="/about" className="hover:text-gray-300 transition-colors">Политика</a>
+          <a href="/about" className="hover:text-gray-300 transition-colors">Описание</a>
           <a href="https://discord.gg/3gXZNwFr" target="_blank" rel="noopener noreferrer" className="hover:text-gray-300 transition-colors">Discord</a>
         </div>
       </footer>

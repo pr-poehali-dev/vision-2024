@@ -3,6 +3,7 @@ import { motion } from "framer-motion"
 import { Header } from "@/components/Header"
 import { Button } from "@/components/ui/button"
 import Icon from "@/components/ui/icon"
+import { useClickSound } from "@/hooks/useClickSound"
 
 const sections = [
   {
@@ -42,6 +43,7 @@ const sections = [
 
 export default function AboutPage() {
   const navigate = useNavigate()
+  const playSound = useClickSound()
 
   return (
     <main className="min-h-screen bg-[#0a0a0a]">
@@ -51,7 +53,7 @@ export default function AboutPage() {
         <Button
           variant="ghost"
           className="text-gray-400 hover:text-white mb-6 -ml-2"
-          onClick={() => navigate("/")}
+          onClick={() => { playSound(); navigate("/") }}
         >
           <Icon name="ArrowLeft" size={16} className="mr-2" /> На главную
         </Button>
@@ -67,9 +69,10 @@ export default function AboutPage() {
               key={i}
               initial={{ opacity: 0, y: 24 }}
               whileInView={{ opacity: 1, y: 0 }}
+              whileHover={{ scale: 1.02, boxShadow: "0 0 24px rgba(139,92,246,0.15)" }}
               viewport={{ once: true }}
               transition={{ duration: 0.5, delay: i * 0.1 }}
-              className="rounded-2xl bg-[#111] border border-[#222] p-6 flex flex-col"
+              className="rounded-2xl bg-[#111] border border-[#222] p-6 flex flex-col cursor-default"
             >
               <div className="flex items-center gap-3 mb-4">
                 <div className={`w-9 h-9 rounded-xl ${s.bg} flex items-center justify-center flex-shrink-0`}>
@@ -91,7 +94,7 @@ export default function AboutPage() {
         <div className="flex items-center justify-center gap-6 mt-3">
           <a href="/" className="hover:text-gray-300 transition-colors">Главная</a>
           <a href="/city?tab=residents" className="hover:text-gray-300 transition-colors">Жители</a>
-          <a href="/about" className="hover:text-gray-300 transition-colors">Политика</a>
+          <a href="/about" className="hover:text-gray-300 transition-colors">Описание</a>
           <a href="https://discord.gg/3gXZNwFr" target="_blank" rel="noopener noreferrer" className="hover:text-gray-300 transition-colors">Discord</a>
         </div>
       </footer>

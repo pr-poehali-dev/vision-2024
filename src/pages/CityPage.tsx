@@ -3,6 +3,7 @@ import { motion, AnimatePresence } from "framer-motion"
 import { Header } from "@/components/Header"
 import Icon from "@/components/ui/icon"
 import { Button } from "@/components/ui/button"
+import { useClickSound } from "@/hooks/useClickSound"
 
 const tabs = [
   { id: "residents", label: "Жители города", icon: "Users" },
@@ -82,6 +83,7 @@ const rulesText = `📖 ПРАВИЛА ГОРОДА ХАЗБИКОВО:
 export default function CityPage() {
   const [params] = useSearchParams()
   const navigate = useNavigate()
+  const playSound = useClickSound()
   const activeTab = params.get("tab") || "residents"
 
   return (
@@ -92,7 +94,7 @@ export default function CityPage() {
         <Button
           variant="ghost"
           className="text-gray-400 hover:text-white mb-6 -ml-2"
-          onClick={() => navigate("/")}
+          onClick={() => { playSound(); navigate("/") }}
         >
           <Icon name="ArrowLeft" size={16} className="mr-2" /> На главную
         </Button>
@@ -110,18 +112,21 @@ export default function CityPage() {
           className="flex flex-wrap gap-2 mb-8"
         >
           {tabs.map((t) => (
-            <button
+            <motion.button
               key={t.id}
-              onClick={() => navigate(`/city?tab=${t.id}`)}
+              onClick={() => { playSound(); navigate(`/city?tab=${t.id}`) }}
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.93 }}
+              transition={{ type: "spring", stiffness: 400, damping: 20 }}
               className={`flex items-center gap-2 px-4 py-2 rounded-full text-sm font-medium transition-all ${
                 activeTab === t.id
-                  ? "bg-violet-600 text-white"
+                  ? "bg-violet-600 text-white shadow-[0_0_14px_rgba(139,92,246,0.4)]"
                   : "bg-[#1a1a1a] text-gray-400 hover:text-white hover:bg-[#222]"
               }`}
             >
               <Icon name={t.icon as "Users"} size={14} fallback="Circle" />
               {t.label}
-            </button>
+            </motion.button>
           ))}
         </motion.div>
 
@@ -144,7 +149,14 @@ export default function CityPage() {
                 </thead>
                 <tbody>
                   {residents.map((r, i) => (
-                    <motion.tr key={i} initial={{ opacity: 0, x: -10 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: i * 0.06 }} className="border-b border-[#1a1a1a] hover:bg-[#161616] transition-colors">
+                    <motion.tr
+                      key={i}
+                      initial={{ opacity: 0, x: -10 }}
+                      animate={{ opacity: 1, x: 0 }}
+                      transition={{ delay: i * 0.06 }}
+                      whileHover={{ backgroundColor: "rgba(139,92,246,0.06)" }}
+                      className="border-b border-[#1a1a1a] transition-colors cursor-default"
+                    >
                       <td className="px-6 py-4 text-gray-500 text-sm">{i + 1}</td>
                       <td className="px-6 py-4 text-white font-medium text-sm">{r.nick}</td>
                       <td className="px-6 py-4 text-violet-400 text-sm">{r.role}</td>
@@ -165,6 +177,7 @@ export default function CityPage() {
                     initial={{ opacity: 0, x: reversed ? 20 : -20 }}
                     animate={{ opacity: 1, x: 0 }}
                     transition={{ delay: i * 0.1 }}
+                    whileHover={{ scale: 1.015, boxShadow: "0 0 28px rgba(139,92,246,0.18)" }}
                     className={`rounded-2xl bg-[#111] border border-[#222] overflow-hidden flex flex-col ${reversed ? "md:flex-row-reverse" : "md:flex-row"}`}
                   >
                     <img src={s.image} alt={s.title} className="w-full md:w-64 h-48 object-cover flex-shrink-0" />
@@ -225,7 +238,7 @@ export default function CityPage() {
         <div className="flex items-center justify-center gap-6 mt-3">
           <a href="/" className="hover:text-gray-300 transition-colors">Главная</a>
           <a href="/city?tab=residents" className="hover:text-gray-300 transition-colors">Жители</a>
-          <a href="/about" className="hover:text-gray-300 transition-colors">Политика</a>
+          <a href="/about" className="hover:text-gray-300 transition-colors">Описание</a>
           <a href="https://discord.gg/3gXZNwFr" target="_blank" rel="noopener noreferrer" className="hover:text-gray-300 transition-colors">Discord</a>
         </div>
       </footer>

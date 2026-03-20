@@ -2,9 +2,17 @@ import { useNavigate } from "react-router-dom"
 import { motion } from "framer-motion"
 import { Button } from "@/components/ui/button"
 import Icon from "@/components/ui/icon"
+import { useClickSound } from "@/hooks/useClickSound"
 
 export function HeroSection() {
   const navigate = useNavigate()
+  const playSound = useClickSound()
+
+  const handleNav = (path: string) => {
+    playSound()
+    navigate(path)
+  }
+
   return (
     <section className="flex flex-col items-center justify-center px-4 pt-12 pb-8 text-center">
       <motion.div
@@ -42,19 +50,32 @@ export function HeroSection() {
         transition={{ duration: 0.6, delay: 0.32 }}
         className="flex flex-col sm:flex-row items-center gap-4"
       >
-        <Button
-          className="rounded-full bg-violet-600 px-8 py-3 hover:bg-violet-700 text-white transition-transform hover:scale-105 active:scale-95 text-base"
-          onClick={() => navigate("/city")}
+        <motion.div
+          whileHover={{ scale: 1.07, boxShadow: "0 0 24px rgba(139,92,246,0.45)" }}
+          whileTap={{ scale: 0.94 }}
+          transition={{ type: "spring", stiffness: 400, damping: 18 }}
         >
-          Перейти к Сайту <Icon name="ArrowUpRight" size={18} className="ml-2" />
-        </Button>
-        <Button
-          variant="outline"
-          className="rounded-full border-gray-700 bg-transparent text-white hover:bg-gray-800 transition-transform hover:scale-105 active:scale-95"
-          onClick={() => navigate("/about")}
+          <Button
+            className="rounded-full bg-violet-600 px-8 py-3 hover:bg-violet-700 text-white text-base"
+            onClick={() => handleNav("/city")}
+          >
+            Перейти к Сайту <Icon name="ArrowUpRight" size={18} className="ml-2" />
+          </Button>
+        </motion.div>
+
+        <motion.div
+          whileHover={{ scale: 1.07 }}
+          whileTap={{ scale: 0.94 }}
+          transition={{ type: "spring", stiffness: 400, damping: 18 }}
         >
-          <Icon name="BookOpen" size={16} className="mr-2 text-violet-400" /> Описание
-        </Button>
+          <Button
+            variant="outline"
+            className="rounded-full border-gray-700 bg-transparent text-white hover:bg-gray-800"
+            onClick={() => handleNav("/about")}
+          >
+            <Icon name="BookOpen" size={16} className="mr-2 text-violet-400" /> Описание
+          </Button>
+        </motion.div>
       </motion.div>
     </section>
   )
