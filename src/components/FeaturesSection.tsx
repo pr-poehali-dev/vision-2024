@@ -1,6 +1,7 @@
 import { useNavigate } from "react-router-dom"
 import { motion } from "framer-motion"
 import Icon from "@/components/ui/icon"
+import { useClickSound } from "@/hooks/useClickSound"
 
 const features = [
   {
@@ -37,8 +38,17 @@ const features = [
   },
 ]
 
+const glowMap: Record<string, string> = {
+  "text-violet-400": "rgba(139,92,246,0.4)",
+  "text-blue-400": "rgba(59,130,246,0.4)",
+  "text-red-400": "rgba(239,68,68,0.4)",
+  "text-green-400": "rgba(34,197,94,0.4)",
+}
+
 export function FeaturesSection() {
   const navigate = useNavigate()
+  const playSound = useClickSound()
+
   return (
     <section className="px-4 md:px-8 py-8">
       <h2 className="text-center text-2xl font-bold text-white mb-2">Разделы города</h2>
@@ -51,10 +61,17 @@ export function FeaturesSection() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.5, delay: i * 0.1 }}
-            whileHover={{ scale: 1.03, y: -4 }}
-            className="rounded-2xl bg-[#111] border border-[#222] p-5 flex flex-col gap-3 cursor-pointer hover:border-violet-500/40 hover:bg-[#161616] transition-colors"
-            onClick={() => navigate(`/city?tab=${f.tab}`)}
+            whileHover={{
+              scale: 1.05,
+              y: -5,
+              boxShadow: `0 0 22px 2px ${glowMap[f.color]}`,
+            }}
+            whileTap={{ scale: 0.94 }}
+            className="rounded-2xl bg-[#111] border border-[#222] p-5 flex flex-col gap-3 cursor-pointer hover:border-violet-500/40 hover:bg-[#161616] transition-colors relative overflow-hidden"
+            onClick={() => { playSound(); navigate(`/city?tab=${f.tab}`) }}
           >
+            <span className="pointer-events-none absolute inset-0 opacity-0 hover:opacity-100 transition-opacity duration-300 rounded-2xl"
+              style={{ background: "linear-gradient(135deg, rgba(255,255,255,0.05) 0%, transparent 60%)" }} />
             <div className={`w-10 h-10 rounded-xl ${f.bg} flex items-center justify-center`}>
               <Icon name={f.icon as "Users"} size={20} className={f.color} fallback="Circle" />
             </div>

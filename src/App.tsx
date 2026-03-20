@@ -7,14 +7,12 @@ import Index from "./pages/Index";
 import CityPage from "./pages/CityPage";
 import AboutPage from "./pages/AboutPage";
 import NotFound from "./pages/NotFound";
-import { CursorGlow } from "./components/CursorGlow";
 
 const queryClient = new QueryClient();
 
 const App = () => (
   <QueryClientProvider client={queryClient}>
     <TooltipProvider>
-      <CursorGlow />
       <Toaster />
       <Sonner />
       <BrowserRouter>

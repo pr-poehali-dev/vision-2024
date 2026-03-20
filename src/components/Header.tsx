@@ -1,6 +1,7 @@
 import { Link, useNavigate } from "react-router-dom"
 import { motion } from "framer-motion"
 import { useClickSound } from "@/hooks/useClickSound"
+import { LiquidButton } from "@/components/LiquidButton"
 
 export function Header() {
   const navigate = useNavigate()
@@ -55,18 +56,14 @@ export function Header() {
         </motion.a>
       </nav>
 
-      <motion.a
-        href="https://discord.gg/3gXZNwFr"
-        target="_blank"
-        rel="noopener noreferrer"
-        onClick={playSound}
-        className="text-sm font-medium rounded-full border border-violet-500 text-violet-400 px-4 py-2 transition-colors hover:bg-violet-500/20 hover:text-violet-300 hover:border-violet-400"
-        whileHover={{ scale: 1.06, boxShadow: "0 0 16px rgba(139,92,246,0.35)" }}
-        whileTap={{ scale: 0.94 }}
-        transition={{ type: "spring", stiffness: 400, damping: 20 }}
+      <LiquidButton
+        variant="outline"
+        onClick={() => { playSound(); window.open("https://discord.gg/3gXZNwFr", "_blank") }}
+        glowColor="rgba(139,92,246,0.35)"
+        className="rounded-full border-violet-500 text-violet-400 hover:text-violet-300 px-4 py-2 text-sm"
       >
         Discord
-      </motion.a>
+      </LiquidButton>
     </header>
   )
 }

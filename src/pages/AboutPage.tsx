@@ -1,7 +1,7 @@
 import { useNavigate } from "react-router-dom"
 import { motion } from "framer-motion"
 import { Header } from "@/components/Header"
-import { Button } from "@/components/ui/button"
+import { LiquidButton } from "@/components/LiquidButton"
 import Icon from "@/components/ui/icon"
 import { useClickSound } from "@/hooks/useClickSound"
 
@@ -50,13 +50,14 @@ export default function AboutPage() {
       <Header />
 
       <section className="max-w-5xl mx-auto px-4 py-10">
-        <Button
+        <LiquidButton
           variant="ghost"
-          className="text-gray-400 hover:text-white mb-6 -ml-2"
           onClick={() => { playSound(); navigate("/") }}
+          glowColor="rgba(139,92,246,0.2)"
+          className="mb-6 -ml-2 text-gray-400 hover:text-white"
         >
-          <Icon name="ArrowLeft" size={16} className="mr-2" /> На главную
-        </Button>
+          <Icon name="ArrowLeft" size={16} /> На главную
+        </LiquidButton>
 
         <motion.div initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5 }}>
           <h1 className="text-3xl font-bold text-white mb-2">Описание</h1>
