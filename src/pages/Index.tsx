@@ -17,7 +17,7 @@ export default function Index() {
           <a href="/" className="hover:text-gray-300 transition-colors">Главная</a>
           <a href="/city?tab=residents" className="hover:text-gray-300 transition-colors">Жители</a>
           <a href="/about" className="hover:text-gray-300 transition-colors">Политика</a>
-          <a href="https://discord.gg" target="_blank" rel="noopener noreferrer" className="hover:text-gray-300 transition-colors">Discord</a>
+          <a href="https://discord.gg/3gXZNwFr" target="_blank" rel="noopener noreferrer" className="hover:text-gray-300 transition-colors">Discord</a>
         </div>
       </footer>
     </main>

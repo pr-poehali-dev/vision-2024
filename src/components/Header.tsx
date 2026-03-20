@@ -22,18 +22,14 @@ export function Header() {
         <Link to="/about" className="text-sm text-gray-300 hover:text-white transition-colors">
           Политика
         </Link>
-        <a href="https://discord.gg" target="_blank" rel="noopener noreferrer" className="text-sm text-gray-300 hover:text-white transition-colors">
+        <a href="https://discord.gg/3gXZNwFr" target="_blank" rel="noopener noreferrer" className="text-sm text-gray-300 hover:text-white transition-colors">
           Discord
         </a>
       </nav>
 
-      <Button
-        variant="outline"
-        className="rounded-full border-violet-500 text-violet-400 hover:bg-violet-500/10 hover:text-violet-300 bg-transparent"
-        onClick={() => navigate("/city")}
-      >
-        Перейти к Сайту
-      </Button>
+      <a href="https://discord.gg/3gXZNwFr" target="_blank" rel="noopener noreferrer" className="text-sm font-medium rounded-full border border-violet-500 text-violet-400 hover:bg-violet-500/10 hover:text-violet-300 px-4 py-2 transition-colors">
+        Discord
+      </a>
     </header>
   )
 }

@@ -43,10 +43,10 @@ export function HeroSection() {
         className="flex flex-col sm:flex-row items-center gap-4"
       >
         <Button
-          className="rounded-full bg-violet-600 px-6 hover:bg-violet-700 text-white transition-transform hover:scale-105 active:scale-95"
+          className="rounded-full bg-violet-600 px-8 py-3 hover:bg-violet-700 text-white transition-transform hover:scale-105 active:scale-95 text-base"
           onClick={() => navigate("/city")}
         >
-          Перейти к Сайту <Icon name="ArrowUpRight" size={16} className="ml-2" />
+          Перейти к Сайту <Icon name="ArrowUpRight" size={18} className="ml-2" />
         </Button>
         <Button
           variant="outline"

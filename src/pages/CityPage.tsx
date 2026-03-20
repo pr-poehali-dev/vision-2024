@@ -14,12 +14,14 @@ const tabs = [
 const residents = [
   { nick: "Xazbik_", role: "Мэр города" },
   { nick: "Der1zon", role: "Со-основатель" },
-  { nick: "—", role: "—" },
-  { nick: "—", role: "—" },
+  { nick: "AstraLch1k", role: "Архитектор" },
+  { nick: "nikita_2022", role: "Школьник" },
+  { nick: "se1hhyt", role: "Житель" },
+  { nick: "romdedd", role: "Житель" },
 ]
 
 const emergency = [
-  { nick: "Xazbik_", event: "—" },
+  { nick: "reclomad", event: "Довёл мэра и был кикнут" },
   { nick: "—", event: "—" },
   { nick: "—", event: "—" },
 ]
@@ -33,6 +35,16 @@ const sights = [
   {
     title: "Центральная площадь",
     description: "Главное место сбора жителей. Здесь проходят городские мероприятия, встречи и важные события города Хазбиково на сервере ChichWaka.",
+    image: "/placeholder.jpg",
+  },
+  {
+    title: "Суд",
+    description: "Здание суда города Хазбиково — место разбирательства городских споров и конфликтов между жителями. Именно здесь мэр Xazbik_ выносит решения по особо важным делам.",
+    image: "/placeholder.jpg",
+  },
+  {
+    title: "Портал",
+    description: "Главный портал города соединяет Хазбиково с другими измерениями сервера ChichWaka. Уникальная постройка, украшенная светящимися камнями и являющаяся символом города.",
     image: "/placeholder.jpg",
   },
 ]
@@ -144,16 +156,25 @@ export default function CityPage() {
           )}
 
           {activeTab === "sights" && (
-            <motion.div key="sights" initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -8 }} transition={{ duration: 0.3 }} className="flex flex-col gap-8">
-              {sights.map((s, i) => (
-                <motion.div key={i} initial={{ opacity: 0, x: -20 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: i * 0.12 }} className="rounded-2xl bg-[#111] border border-[#222] overflow-hidden flex flex-col md:flex-row">
-                  <img src={s.image} alt={s.title} className="w-full md:w-64 h-48 object-cover" />
-                  <div className="p-6 flex flex-col justify-center">
-                    <h3 className="text-white font-bold text-lg mb-2">{s.title}</h3>
-                    <p className="text-gray-400 text-sm leading-relaxed">{s.description}</p>
-                  </div>
-                </motion.div>
-              ))}
+            <motion.div key="sights" initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -8 }} transition={{ duration: 0.3 }} className="flex flex-col gap-6">
+              {sights.map((s, i) => {
+                const reversed = i % 2 !== 0
+                return (
+                  <motion.div
+                    key={i}
+                    initial={{ opacity: 0, x: reversed ? 20 : -20 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    transition={{ delay: i * 0.1 }}
+                    className={`rounded-2xl bg-[#111] border border-[#222] overflow-hidden flex flex-col ${reversed ? "md:flex-row-reverse" : "md:flex-row"}`}
+                  >
+                    <img src={s.image} alt={s.title} className="w-full md:w-64 h-48 object-cover flex-shrink-0" />
+                    <div className="p-6 flex flex-col justify-center">
+                      <h3 className="text-white font-bold text-lg mb-2">{s.title}</h3>
+                      <p className="text-gray-400 text-sm leading-relaxed">{s.description}</p>
+                    </div>
+                  </motion.div>
+                )
+              })}
             </motion.div>
           )}
 
@@ -205,7 +226,7 @@ export default function CityPage() {
           <a href="/" className="hover:text-gray-300 transition-colors">Главная</a>
           <a href="/city?tab=residents" className="hover:text-gray-300 transition-colors">Жители</a>
           <a href="/about" className="hover:text-gray-300 transition-colors">Политика</a>
-          <a href="https://discord.gg" target="_blank" rel="noopener noreferrer" className="hover:text-gray-300 transition-colors">Discord</a>
+          <a href="https://discord.gg/3gXZNwFr" target="_blank" rel="noopener noreferrer" className="hover:text-gray-300 transition-colors">Discord</a>
         </div>
       </footer>
     </main>

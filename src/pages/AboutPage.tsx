@@ -47,7 +47,7 @@ export default function AboutPage() {
     <main className="min-h-screen bg-[#0a0a0a]">
       <Header />
 
-      <section className="max-w-3xl mx-auto px-4 py-10">
+      <section className="max-w-5xl mx-auto px-4 py-10">
         <Button
           variant="ghost"
           className="text-gray-400 hover:text-white mb-6 -ml-2"
@@ -61,7 +61,7 @@ export default function AboutPage() {
           <p className="text-gray-400 mb-10 text-sm">XazGames · by Xaz&amp;Der1</p>
         </motion.div>
 
-        <div className="flex flex-col gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
           {sections.map((s, i) => (
             <motion.div
               key={i}
@@ -69,15 +69,15 @@ export default function AboutPage() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.5, delay: i * 0.1 }}
-              className="rounded-2xl bg-[#111] border border-[#222] p-6"
+              className="rounded-2xl bg-[#111] border border-[#222] p-6 flex flex-col"
             >
               <div className="flex items-center gap-3 mb-4">
                 <div className={`w-9 h-9 rounded-xl ${s.bg} flex items-center justify-center flex-shrink-0`}>
                   <Icon name={s.icon as "Globe"} size={18} className={s.color} fallback="Circle" />
                 </div>
-                <h2 className="text-white font-bold text-lg">{s.title}</h2>
+                <h2 className="text-white font-bold text-base">{s.title}</h2>
               </div>
-              <div className="text-gray-400 text-sm leading-relaxed whitespace-pre-line">
+              <div className="text-gray-400 text-sm leading-relaxed whitespace-pre-line flex-1">
                 {s.content}
               </div>
             </motion.div>
@@ -92,7 +92,7 @@ export default function AboutPage() {
           <a href="/" className="hover:text-gray-300 transition-colors">Главная</a>
           <a href="/city?tab=residents" className="hover:text-gray-300 transition-colors">Жители</a>
           <a href="/about" className="hover:text-gray-300 transition-colors">Политика</a>
-          <a href="https://discord.gg" target="_blank" rel="noopener noreferrer" className="hover:text-gray-300 transition-colors">Discord</a>
+          <a href="https://discord.gg/3gXZNwFr" target="_blank" rel="noopener noreferrer" className="hover:text-gray-300 transition-colors">Discord</a>
         </div>
       </footer>
     </main>
